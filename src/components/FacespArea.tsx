@@ -20,7 +20,6 @@ interface Metric {
   label: string
   value: string
   icon: React.ComponentType<{ className?: string }>
-  highlight?: boolean
 }
 
 export function FacespArea() {
@@ -38,20 +37,10 @@ export function FacespArea() {
     const verificados = suppliers.filter((s) => s.verified).length
 
     return [
-      { label: 'Demandas na rede', value: String(demands.length), icon: Landmark, highlight: true },
-      { label: 'Em curadoria', value: String(emCuradoria), icon: Lightbulb, highlight: true },
-      {
-        label: 'Abertas sem proposta',
-        value: String(abertasSemProposta),
-        icon: MapPin,
-        highlight: true,
-      },
-      {
-        label: 'Pilotos e contratos em andamento',
-        value: String(emAndamento),
-        icon: Globe2,
-        highlight: true,
-      },
+      { label: 'Demandas na rede', value: String(demands.length), icon: Landmark },
+      { label: 'Em curadoria', value: String(emCuradoria), icon: Lightbulb },
+      { label: 'Abertas sem proposta', value: String(abertasSemProposta), icon: MapPin },
+      { label: 'Pilotos e contratos em andamento', value: String(emAndamento), icon: Globe2 },
       { label: 'Concluídas e avaliadas', value: String(concluidas), icon: ShieldCheck },
       {
         label: 'Fornecedores verificados',
@@ -128,26 +117,16 @@ export function FacespArea() {
         {/* Cartões de indicadores */}
         <section aria-label="Indicadores da rede">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {metrics.map(({ label, value, icon: Icon, highlight }) => (
+            {metrics.map(({ label, value, icon: Icon }) => (
               <div
                 key={label}
-                className={`rounded-2xl border p-4 shadow-xs transition-colors ${
-                  highlight
-                    ? 'bg-ponte-blue border-ponte-blue text-white'
-                    : 'bg-white border-ponte-border text-ponte-text'
-                }`}
+                className="rounded-2xl border border-ponte-border bg-white p-4 shadow-xs"
               >
-                <Icon
-                  className={`w-4 h-4 mb-2 ${highlight ? 'text-ponte-orange' : 'text-ponte-blue'}`}
-                />
-                <p className="text-2xl font-heading font-bold leading-none">{value}</p>
-                <p
-                  className={`text-xs mt-1.5 leading-snug ${
-                    highlight ? 'text-white/80' : 'text-ponte-text-muted'
-                  }`}
-                >
-                  {label}
+                <Icon className="w-4 h-4 mb-2 text-ponte-blue" />
+                <p className="text-2xl font-heading font-bold leading-none text-ponte-text">
+                  {value}
                 </p>
+                <p className="text-xs mt-1.5 leading-snug text-ponte-text-muted">{label}</p>
               </div>
             ))}
           </div>
