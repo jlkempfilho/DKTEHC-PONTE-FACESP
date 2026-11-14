@@ -59,15 +59,6 @@ export function TopBar() {
                   }`}
                 >
                   {role}
-                  {role !== 'Empresário' && role !== 'Fornecedor' && (
-                    <span
-                      className={`ml-1.5 text-[9px] px-1 py-0.2 rounded font-normal ${
-                        isActive ? 'bg-white/20 text-white' : 'bg-slate-200 text-slate-600'
-                      }`}
-                    >
-                      Em breve
-                    </span>
-                  )}
                 </button>
               )
             })}
@@ -92,11 +83,6 @@ export function TopBar() {
                     <span className={activeRole === role ? 'font-bold text-ponte-blue' : ''}>
                       {role}
                     </span>
-                    {role !== 'Empresário' && role !== 'Fornecedor' && (
-                      <span className="text-[10px] text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200">
-                        Em breve
-                      </span>
-                    )}
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuContent>

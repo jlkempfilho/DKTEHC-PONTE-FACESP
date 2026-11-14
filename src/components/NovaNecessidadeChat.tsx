@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useMemo } from 'react'
 import { Send, RotateCcw, Sparkles, Bot, User, ArrowRight, Check } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -34,6 +34,14 @@ const INVESTMENT_OPTIONS = [
 
 const PILOT_OPTIONS = ['Sim', 'Não']
 
+/** Renderiza **negrito** como <strong> de verdade; sem asteriscos na tela. */
+function renderBoldText(text: string) {
+  const parts = text.split(/\*\*(.+?)\*\*/g)
+  return parts.map((part, i) =>
+    i % 2 === 1 ? <strong key={i}>{part}</strong> : <span key={i}>{part}</span>,
+  )
+}
+
 export function NovaNecessidadeChat() {
   const {
     chatMessages,
@@ -66,6 +74,15 @@ export function NovaNecessidadeChat() {
   const [cityInput, setCityInput] = useState('Mogi Guaçu')
   const [tempCategory, setTempCategory] = useState<Category>(detectedCategory)
   const messagesEndRef = useRef<HTMLDivElement>(null)
+
+  // Última mensagem de pergunta do assistente: só ela mostra os chips clicáveis.
+  const currentQuestionMessageId = useMemo(() => {
+    for (let i = chatMessages.length - 1; i >= 0; i--) {
+      const msg = chatMessages[i]
+      if (msg.sender === 'assistant' && msg.customContent) return msg.id
+    }
+    return null
+  }, [chatMessages])
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -464,7 +481,7 @@ export function NovaNecessidadeChat() {
                       : 'bg-white border border-ponte-border text-ponte-text rounded-bl-xs'
                   }`}
                 >
-                  <p className="whitespace-pre-wrap">{msg.text}</p>
+                  <p className="whitespace-pre-wrap">{renderBoldText(msg.text)}</p>
 
                   {/* Interactive: Category Confirmation Dropdown */}
                   {msg.customContent === 'category-confirmation' && chatStep === 1 && (
@@ -497,21 +514,26 @@ export function NovaNecessidadeChat() {
                     </div>
                   )}
 
-                  {/* Interactive: Category Question Chips */}
-                  {msg.customContent === 'question-chips' && chatStep >= 2 && chatStep < 10 && (
-                    <div className="mt-3.5 flex flex-wrap gap-2">
-                      {CATEGORY_QUESTIONS[detectedCategory]?.[chatStep - 2]?.options.map((opt) => (
-                        <button
-                          key={opt}
-                          type="button"
-                          onClick={() => handleSelectCategoryQuestionAnswer(chatStep - 2, opt)}
-                          className="px-3.5 py-1.5 rounded-full text-xs font-medium border border-ponte-border bg-slate-50 hover:bg-ponte-blue hover:text-white hover:border-ponte-blue transition-all active:scale-95 text-left"
-                        >
-                          {opt}
-                        </button>
-                      ))}
-                    </div>
-                  )}
+                  {/* Interactive: Category Question Chips (somente na pergunta atual) */}
+                  {msg.customContent === 'question-chips' &&
+                    chatStep >= 2 &&
+                    chatStep < 10 &&
+                    msg.id === currentQuestionMessageId && (
+                      <div className="mt-3.5 flex flex-wrap gap-2">
+                        {CATEGORY_QUESTIONS[detectedCategory]?.[chatStep - 2]?.options.map(
+                          (opt) => (
+                            <button
+                              key={opt}
+                              type="button"
+                              onClick={() => handleSelectCategoryQuestionAnswer(chatStep - 2, opt)}
+                              className="px-3.5 py-1.5 rounded-full text-xs font-medium border border-ponte-border bg-slate-50 hover:bg-ponte-blue hover:text-white hover:border-ponte-blue transition-all active:scale-95 text-left"
+                            >
+                              {opt}
+                            </button>
+                          ),
+                        )}
+                      </div>
+                    )}
 
                   {/* Interactive: City Input */}
                   {msg.customContent === 'city-input' && chatStep === 10 && (
@@ -553,37 +575,41 @@ export function NovaNecessidadeChat() {
                     </div>
                   )}
 
-                  {/* Interactive: Investment Chips */}
-                  {msg.customContent === 'question-chips' && chatStep === 11 && (
-                    <div className="mt-3.5 flex flex-wrap gap-2">
-                      {INVESTMENT_OPTIONS.map((inv) => (
-                        <button
-                          key={inv}
-                          type="button"
-                          onClick={() => handleSelectInvestment(inv)}
-                          className="px-3.5 py-1.5 rounded-full text-xs font-medium border border-ponte-border bg-slate-50 hover:bg-ponte-blue hover:text-white hover:border-ponte-blue transition-all active:scale-95"
-                        >
-                          {inv}
-                        </button>
-                      ))}
-                    </div>
-                  )}
+                  {/* Interactive: Investment Chips (somente na pergunta atual) */}
+                  {msg.customContent === 'question-chips' &&
+                    chatStep === 11 &&
+                    msg.id === currentQuestionMessageId && (
+                      <div className="mt-3.5 flex flex-wrap gap-2">
+                        {INVESTMENT_OPTIONS.map((inv) => (
+                          <button
+                            key={inv}
+                            type="button"
+                            onClick={() => handleSelectInvestment(inv)}
+                            className="px-3.5 py-1.5 rounded-full text-xs font-medium border border-ponte-border bg-slate-50 hover:bg-ponte-blue hover:text-white hover:border-ponte-blue transition-all active:scale-95"
+                          >
+                            {inv}
+                          </button>
+                        ))}
+                      </div>
+                    )}
 
-                  {/* Interactive: Pilot Project Chips */}
-                  {msg.customContent === 'question-chips' && chatStep === 12 && (
-                    <div className="mt-3.5 flex flex-wrap gap-2">
-                      {PILOT_OPTIONS.map((pilot) => (
-                        <button
-                          key={pilot}
-                          type="button"
-                          onClick={() => handleSelectPilot(pilot)}
-                          className="px-5 py-2 rounded-full text-xs font-semibold border border-ponte-border bg-slate-50 hover:bg-ponte-blue hover:text-white hover:border-ponte-blue transition-all active:scale-95"
-                        >
-                          {pilot}
-                        </button>
-                      ))}
-                    </div>
-                  )}
+                  {/* Interactive: Pilot Project Chips (somente na pergunta atual) */}
+                  {msg.customContent === 'question-chips' &&
+                    chatStep === 12 &&
+                    msg.id === currentQuestionMessageId && (
+                      <div className="mt-3.5 flex flex-wrap gap-2">
+                        {PILOT_OPTIONS.map((pilot) => (
+                          <button
+                            key={pilot}
+                            type="button"
+                            onClick={() => handleSelectPilot(pilot)}
+                            className="px-5 py-2 rounded-full text-xs font-semibold border border-ponte-border bg-slate-50 hover:bg-ponte-blue hover:text-white hover:border-ponte-blue transition-all active:scale-95"
+                          >
+                            {pilot}
+                          </button>
+                        ))}
+                      </div>
+                    )}
                 </div>
 
                 {isUser && (

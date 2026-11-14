@@ -1,18 +1,11 @@
 import { useState } from 'react'
 import { usePonte } from '@/context/PonteContext'
-import { ALL_STATUSES, Demand, DemandStatus } from '@/types/ponte'
+import { Demand } from '@/types/ponte'
 import { DemandStatusBadge } from './DemandStatusBadge'
 import { FichaNecessidadeCard } from './FichaNecessidadeCard'
 import { PropostasRecebidas, ReviewDisplay } from './PropostasRecebidas'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
 import {
   PlusCircle,
   Calendar,
@@ -23,7 +16,7 @@ import {
 } from 'lucide-react'
 
 export function MinhasDemandasTab() {
-  const { demands, updateDemandStatus, updateDemand, setActiveTab } = usePonte()
+  const { demands, updateDemand, setActiveTab } = usePonte()
 
   // Demandas do empresário logado (as demandas-semente pertencem a outras empresas)
   const myDemands = demands.filter((d) => !d.ownerCompany)
@@ -80,7 +73,7 @@ export function MinhasDemandasTab() {
               key={demand.id}
               className="bg-white rounded-2xl border border-ponte-border p-5 sm:p-6 shadow-xs animate-bubble-in flex flex-col gap-5"
             >
-              {/* Card Header: Title + Status + Status Switcher */}
+              {/* Card Header: Title + Status */}
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-4 border-b border-ponte-border/80">
                 <div>
                   <div className="flex items-center gap-2 flex-wrap mb-1">
@@ -104,30 +97,9 @@ export function MinhasDemandasTab() {
                   </div>
                 </div>
 
-                {/* Status Badge + Demonstrable Status Selector */}
+                {/* Status Badge */}
                 <div className="flex items-center gap-2 self-start md:self-center flex-wrap">
                   <DemandStatusBadge status={demand.status} />
-
-                  <div className="flex items-center gap-1.5 pl-2 border-l border-ponte-border">
-                    <span className="text-[11px] text-ponte-text-muted hidden sm:inline">
-                      Simular status:
-                    </span>
-                    <Select
-                      value={demand.status}
-                      onValueChange={(val) => updateDemandStatus(demand.id, val as DemandStatus)}
-                    >
-                      <SelectTrigger className="w-[180px] h-8 text-xs bg-slate-50 border-ponte-border">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent className="bg-white">
-                        {ALL_STATUSES.map((st) => (
-                          <SelectItem key={st} value={st} className="text-xs">
-                            {st}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
                 </div>
               </div>
 

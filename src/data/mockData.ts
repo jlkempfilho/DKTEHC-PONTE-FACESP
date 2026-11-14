@@ -57,7 +57,7 @@ export const DEMAND_REGION_BY_CITY: Record<string, string> = {
   Sorocaba: 'Sorocaba',
   Bauru: 'Bauru',
   'Ribeirão Preto': 'Ribeirão Preto',
-  Santos: 'Baixada Santista',
+  Santos: 'Litoral',
 }
 
 const SEED_FICHAS: Record<string, FichaNecessidade> = {
@@ -639,6 +639,9 @@ export function normalizeText(text: string): string {
 
 /**
  * Classifies user text into one of the 9 categories according to keywords.
+ * Keywords match WHOLE words only (never fragments inside other words),
+ * case-insensitive and accent-tolerant via normalizeText. Categories are
+ * checked in order and the first match wins.
  */
 export function classifyTextToCategory(text: string): Category {
   const normalized = normalizeText(text)
@@ -647,17 +650,17 @@ export function classifyTextToCategory(text: string): Category {
     {
       category: 'Cobrança e inadimplência',
       keywords: [
+        'fiado',
+        'cobrar',
+        'cobrando',
         'cobranca',
         'inadimplencia',
         'inadimplente',
-        'boleto',
-        'atraso',
-        'atrasado',
-        'cliente nao paga',
-        'divida',
-        'recuperar credito',
+        'nao pagou',
+        'nao paga',
+        'negativar',
         'devedor',
-        'calote',
+        'pagam depois',
       ],
     },
     {
@@ -720,18 +723,7 @@ export function classifyTextToCategory(text: string): Category {
     },
     {
       category: 'Inteligência artificial e dados',
-      keywords: [
-        'inteligencia artificial',
-        'ia',
-        'dados',
-        'relatorio',
-        'bi',
-        'analise',
-        'previsao',
-        'planilha',
-        'dashboard',
-        'grafico',
-      ],
+      keywords: ['inteligencia artificial', 'ia', 'prever', 'previsao', 'analise de dados'],
     },
     {
       category: 'Gestão e equipe',
@@ -767,13 +759,22 @@ export function classifyTextToCategory(text: string): Category {
 
   for (const rule of rules) {
     for (const kw of rule.keywords) {
-      if (normalized.includes(normalizeText(kw))) {
+      if (matchesWholeWord(normalized, normalizeText(kw))) {
         return rule.category
       }
     }
   }
 
   return 'Solução sob medida'
+}
+
+/**
+ * True when `keyword` occurs in `normalized` as a sequence of whole words
+ * (word boundaries on both sides), so "ia" never matches inside "fiado".
+ */
+function matchesWholeWord(normalized: string, keyword: string): boolean {
+  const escaped = keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/\s+/g, '\\s+')
+  return new RegExp(`\\b${escaped}\\b`).test(normalized)
 }
 
 /**
