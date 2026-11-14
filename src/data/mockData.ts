@@ -1,0 +1,494 @@
+import { Category, Supplier, ALL_CATEGORIES } from '@/types/ponte'
+
+export { ALL_CATEGORIES }
+export type { Category }
+
+export const MOCK_SUPPLIERS: Supplier[] = [
+  {
+    id: 'cobrefacil-tech',
+    name: 'CobreFácil Tech',
+    type: 'Startup',
+    city: 'Campinas',
+    verified: true,
+    verifiedByCity: 'Campinas',
+    category: 'Cobrança e inadimplência',
+    description:
+      'Plataforma de cobrança automática com lembretes por WhatsApp e boletos recorrentes.',
+    priceRange: 'R$ 150 a R$ 400 por mês',
+    rating: 4.9,
+    reviewsCount: 112,
+    customerQuote: 'Reduzimos a inadimplência em 40% no primeiro trimestre.',
+    matchReasonTemplate:
+      'Especialista em recuperação de crédito para varejo com automação de boletos.',
+  },
+  {
+    id: 'lojaviva-digital',
+    name: 'LojaViva Digital',
+    type: 'Agência',
+    city: 'São Paulo',
+    verified: true,
+    verifiedByCity: 'São Paulo',
+    category: 'Site ou loja virtual',
+    description: 'Criação de lojas virtuais com pagamento online e integração com entrega.',
+    priceRange: 'Projeto fechado de R$ 3 mil a R$ 8 mil',
+    rating: 4.8,
+    reviewsCount: 203,
+    customerQuote: 'Nossa loja online saiu do papel em seis semanas.',
+    matchReasonTemplate:
+      'Desenvolve e-commerces completos com entrega integrada e suporte contínuo.',
+  },
+  {
+    id: 'falazap-sistemas',
+    name: 'FalaZap Sistemas',
+    type: 'Software house',
+    city: 'Ribeirão Preto',
+    verified: true,
+    verifiedByCity: 'Ribeirão Preto',
+    category: 'Atendimento e WhatsApp',
+    description: 'Automação de WhatsApp com respostas rápidas e pedidos organizados.',
+    priceRange: 'R$ 200 a R$ 600 por mês',
+    rating: 4.7,
+    reviewsCount: 89,
+    customerQuote: 'Nenhum pedido mais se perde entre as mensagens.',
+    matchReasonTemplate:
+      'Automatiza o fluxo de conversas e cardápios/pedidos no WhatsApp sem perder o toque humano.',
+  },
+  {
+    id: 'estoquecerto',
+    name: 'EstoqueCerto',
+    type: 'Startup',
+    city: 'Sorocaba',
+    verified: true,
+    verifiedByCity: 'Sorocaba',
+    category: 'Estoque e compras',
+    description: 'Controle de estoque simples com alertas de reposição e validade.',
+    priceRange: 'R$ 120 a R$ 350 por mês',
+    rating: 4.6,
+    reviewsCount: 74,
+    customerQuote: 'Acabaram os produtos faltando na gôndola.',
+    matchReasonTemplate:
+      'Desenvolvido sob medida para pequenos comércios evitarem perdas e furos de estoque.',
+  },
+  {
+    id: 'caixaforte-sistemas',
+    name: 'CaixaForte Sistemas',
+    type: 'Software house',
+    city: 'Mogi Guaçu',
+    verified: true,
+    verifiedByCity: 'Mogi Guaçu',
+    category: 'Financeiro e recebimentos',
+    description: 'Fluxo de caixa, conciliação de cartões e contas a receber para o pequeno varejo.',
+    priceRange: 'R$ 200 a R$ 500 por mês',
+    rating: 4.5,
+    reviewsCount: 61,
+    customerQuote: 'Finalmente sei quanto entrou e quanto devo receber.',
+    matchReasonTemplate:
+      'Presença local em Mogi Guaçu com foco direto em conciliação financeira de lojas físicas.',
+  },
+  {
+    id: 'dados-do-vale',
+    name: 'Dados do Vale',
+    type: 'Startup',
+    city: 'São José dos Campos',
+    verified: true,
+    verifiedByCity: 'São José dos Campos',
+    category: 'Inteligência artificial e dados',
+    description: 'Painéis e relatórios inteligentes que transformam vendas em decisões.',
+    priceRange: 'R$ 300 a R$ 900 por mês',
+    rating: 4.8,
+    reviewsCount: 95,
+    customerQuote: 'Descobrimos quais produtos realmente dão lucro.',
+    matchReasonTemplate:
+      'Aplica IA e análises práticas para apontar oportunidades reais de faturamento.',
+  },
+  {
+    id: 'time-e-tarefa',
+    name: 'Time & Tarefa',
+    type: 'Software house',
+    city: 'Bauru',
+    verified: true,
+    verifiedByCity: 'Bauru',
+    category: 'Gestão e equipe',
+    description: 'Escala de equipe, tarefas e rotinas de loja em um só lugar.',
+    priceRange: 'Até R$ 200 por mês',
+    rating: 4.4,
+    reviewsCount: 52,
+    customerQuote: 'As escalas de plantão viraram um clique.',
+    matchReasonTemplate:
+      'Resolve folgas, escalas e rotinas de abertura/fechamento de forma descomplicada.',
+  },
+  {
+    id: 'alo-marketing',
+    name: 'Alô Marketing',
+    type: 'Agência',
+    city: 'Santos',
+    verified: true,
+    verifiedByCity: 'Santos',
+    category: 'Marketing e vendas',
+    description: 'Gestão de redes sociais e anúncios locais para atrair clientes da região.',
+    priceRange: 'R$ 500 a R$ 1.500 por mês',
+    rating: 4.7,
+    reviewsCount: 140,
+    customerQuote: 'As vendas de fim de semana dobraram.',
+    matchReasonTemplate:
+      'Especialista em tráfego pago local e campanhas para atrair clientes do bairro.',
+  },
+  {
+    id: 'codigo-serra',
+    name: 'Código Serra',
+    type: 'Software house',
+    city: 'Mogi Guaçu',
+    verified: false,
+    verifiedByCity: '',
+    category: 'Solução sob medida',
+    description: 'Sistemas sob medida para necessidades que nenhum pacote resolve.',
+    priceRange: 'Projeto fechado acima de R$ 5 mil',
+    rating: 4.3,
+    reviewsCount: 31,
+    customerQuote: 'Construíram exatamente o que pedimos.',
+    matchReasonTemplate:
+      'Equipe local em Mogi Guaçu para desenvolvimento customizado e integrações específicas.',
+  },
+  {
+    id: 'fluxocerto-solucoes',
+    name: 'FluxoCerto Soluções',
+    type: 'Autônomo',
+    city: 'Piracicaba',
+    verified: false,
+    verifiedByCity: '',
+    category: 'Financeiro e recebimentos',
+    description: 'Organização de recebimentos e cobranças para negócios de bairro.',
+    priceRange: 'Até R$ 200 por mês',
+    rating: 4.6,
+    reviewsCount: 47,
+    customerQuote: 'Atendimento próximo e honesto, do jeito que a gente precisa.',
+    matchReasonTemplate:
+      'Consultoria e configuração acessível com foco na realidade do microempreendedor.',
+  },
+]
+
+export interface CategoryQuestionDef {
+  question: string
+  options: string[]
+}
+
+export const CATEGORY_QUESTIONS: Record<Category, CategoryQuestionDef[]> = {
+  'Site ou loja virtual': [
+    {
+      question: 'O que o site precisa fazer?',
+      options: [
+        'Vender produtos com pagamento online',
+        'Divulgar serviços e receber contatos',
+        'Só mostrar um catálogo',
+      ],
+    },
+    {
+      question: 'Qual é a urgência para colocar no ar?',
+      options: [
+        'O mais rápido possível (até 15 dias)',
+        'Dentro de 1 a 2 meses',
+        'Estou apenas pesquisando',
+      ],
+    },
+  ],
+  'Cobrança e inadimplência': [
+    {
+      question: 'Onde está o maior problema?',
+      options: [
+        'Cobrança automática de boletos',
+        'Controle de quem está atrasado',
+        'Renegociação com clientes',
+      ],
+    },
+    {
+      question: 'Como você cobra seus clientes hoje?',
+      options: [
+        'Mensagens manuais no WhatsApp',
+        'Boletos emitidos pelo banco',
+        'Planilha ou anotações em papel',
+      ],
+    },
+  ],
+  'Atendimento e WhatsApp': [
+    {
+      question: 'O que você quer automatizar?',
+      options: [
+        'Respostas rápidas no WhatsApp',
+        'Agendamento de pedidos',
+        'Acompanhamento de pedidos',
+      ],
+    },
+    {
+      question: 'Quantas pessoas respondem aos clientes hoje?',
+      options: ['Apenas eu', 'De 2 a 4 atendentes', 'Equipe de 5 ou mais'],
+    },
+  ],
+  'Estoque e compras': [
+    {
+      question: 'Qual é o maior desafio no seu estoque?',
+      options: [
+        'Falta de produtos na prateleira sem aviso',
+        'Controle de validade e perdas',
+        'Saber a hora certa de comprar com fornecedores',
+      ],
+    },
+    {
+      question: 'Como você controla as mercadorias atualmente?',
+      options: [
+        'Caderno ou de cabeça',
+        'Planilhas simples no Excel',
+        'Sistema antigo que não atende',
+      ],
+    },
+  ],
+  'Financeiro e recebimentos': [
+    {
+      question: 'Qual é a sua principal dor financeira?',
+      options: [
+        'Conciliação de taxas de cartão e maquininha',
+        'Saber se o fluxo de caixa fecha no fim do mês',
+        'Controle diário de entradas e saídas',
+      ],
+    },
+    {
+      question: 'Qual é a média de vendas por dia?',
+      options: ['Até 50 vendas/dia', 'De 50 a 200 vendas/dia', 'Mais de 200 vendas/dia'],
+    },
+  ],
+  'Inteligência artificial e dados': [
+    {
+      question: 'O que você gostaria de enxergar no seu negócio?',
+      options: [
+        'Quais produtos dão mais lucro real',
+        'Previsão de demanda para próximos meses',
+        'Painel simples com vendas diárias no celular',
+      ],
+    },
+    {
+      question: 'Você já possui dados registrados de vendas?',
+      options: ['Sim, em sistema PDV ou ERP', 'Sim, em planilhas', 'Ainda tenho poucos registros'],
+    },
+  ],
+  'Gestão e equipe': [
+    {
+      question: 'Qual processo toma mais o seu tempo?',
+      options: [
+        'Escalas de trabalho e folgas da equipe',
+        'Acompanhamento de tarefas e rotinas diárias',
+        'Ponto e controle de horas extras',
+      ],
+    },
+    {
+      question: 'Quantos colaboradores atuam na sua empresa?',
+      options: ['Até 5 colaboradores', 'De 6 a 15 colaboradores', 'Mais de 15 colaboradores'],
+    },
+  ],
+  'Marketing e vendas': [
+    {
+      question: 'Qual é o seu principal objetivo com marketing?',
+      options: [
+        'Atrair clientes novos da minha cidade',
+        'Fidelizar e fazer clientes antigos voltarem',
+        'Profissionalizar as redes sociais (Instagram/Facebook)',
+      ],
+    },
+    {
+      question: 'Você já investiu em anúncios na internet?',
+      options: [
+        'Nunca anunciei',
+        'Já impulsivei posts sem muito resultado',
+        'Já anuncio com frequência',
+      ],
+    },
+  ],
+  'Solução sob medida': [
+    {
+      question: 'Qual tipo de sistema você precisa?',
+      options: [
+        'Integração entre sistemas que já uso',
+        'Aplicativo ou painel exclusivo para o meu modelo',
+        'Automatização de um processo interno complexo',
+      ],
+    },
+    {
+      question: 'Já existe alguma especificação pronta?',
+      options: [
+        'Tenho apenas a ideia e a necessidade',
+        'Já desenhei como imagino as telas',
+        'Preciso de consultoria técnica completa',
+      ],
+    },
+  ],
+}
+
+/**
+ * Normalizes text removing accents, punctuation and lowercasing.
+ */
+export function normalizeText(text: string): string {
+  return text
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+}
+
+/**
+ * Classifies user text into one of the 9 categories according to keywords.
+ */
+export function classifyTextToCategory(text: string): Category {
+  const normalized = normalizeText(text)
+
+  const rules: { category: Category; keywords: string[] }[] = [
+    {
+      category: 'Cobrança e inadimplência',
+      keywords: [
+        'cobranca',
+        'inadimplencia',
+        'inadimplente',
+        'boleto',
+        'atraso',
+        'atrasado',
+        'cliente nao paga',
+        'divida',
+        'recuperar credito',
+        'devedor',
+        'calote',
+      ],
+    },
+    {
+      category: 'Site ou loja virtual',
+      keywords: [
+        'site',
+        'loja virtual',
+        'e-commerce',
+        'ecommerce',
+        'vender online',
+        'loja online',
+        'pagina',
+        'dominio',
+        'compra online',
+        'catalogo online',
+      ],
+    },
+    {
+      category: 'Atendimento e WhatsApp',
+      keywords: [
+        'whatsapp',
+        'zap',
+        'atendimento',
+        'chatbot',
+        'mensagens',
+        'responder cliente',
+        'automacao de atendimento',
+        'bot',
+        'conversas',
+      ],
+    },
+    {
+      category: 'Estoque e compras',
+      keywords: [
+        'estoque',
+        'compras',
+        'inventario',
+        'falta produto',
+        'fornecedor de produtos',
+        'prateleira',
+        'validade',
+        'mercadoria',
+        'gondola',
+      ],
+    },
+    {
+      category: 'Financeiro e recebimentos',
+      keywords: [
+        'financeiro',
+        'recebimento',
+        'fluxo de caixa',
+        'cartao',
+        'maquininha',
+        'contas',
+        'pagamento',
+        'conciliacao',
+        'caixa',
+        'banco',
+      ],
+    },
+    {
+      category: 'Inteligência artificial e dados',
+      keywords: [
+        'inteligencia artificial',
+        'ia',
+        'dados',
+        'relatorio',
+        'bi',
+        'analise',
+        'previsao',
+        'planilha',
+        'dashboard',
+        'grafico',
+      ],
+    },
+    {
+      category: 'Gestão e equipe',
+      keywords: [
+        'gestao',
+        'equipe',
+        'funcionarios',
+        'escala',
+        'agenda',
+        'turno',
+        'pdv',
+        'sistema interno',
+        'colaborador',
+        'rh',
+        'ponto',
+      ],
+    },
+    {
+      category: 'Marketing e vendas',
+      keywords: [
+        'marketing',
+        'vendas',
+        'anuncio',
+        'redes sociais',
+        'instagram',
+        'clientes novos',
+        'divulgacao',
+        'publicidade',
+        'trafego',
+      ],
+    },
+  ]
+
+  for (const rule of rules) {
+    for (const kw of rule.keywords) {
+      if (normalized.includes(normalizeText(kw))) {
+        return rule.category
+      }
+    }
+  }
+
+  return 'Solução sob medida'
+}
+
+/**
+ * Builds the personalized match reason line
+ */
+export function buildMatchReason(
+  supplier: Supplier,
+  ficha: { category: string; city: string; investment: string },
+): string {
+  const parts: string[] = []
+  if (supplier.city.toLowerCase() === ficha.city.toLowerCase()) {
+    parts.push(`atende presencialmente em ${supplier.city}`)
+  } else {
+    parts.push(`atende remotamente ${ficha.city || 'sua região'}`)
+  }
+
+  parts.push('especialista em ' + supplier.category.toLowerCase())
+
+  if (ficha.investment && ficha.investment !== 'Ainda não sei') {
+    parts.push(`compatível com sua faixa de investimento (${ficha.investment.toLowerCase()})`)
+  }
+
+  return `Por que aparece para você: ${parts.join(', ')}.`
+}
