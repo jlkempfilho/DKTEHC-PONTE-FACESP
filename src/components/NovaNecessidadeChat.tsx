@@ -16,6 +16,8 @@ import {
   classifyTextToCategory,
   Category,
   buildMatchReason,
+  SERVICOS_DAS_ASSOCIACOES,
+  normalizeText,
 } from '@/data/mockData'
 import { FichaNecessidadeCard } from './FichaNecessidadeCard'
 import { SupplierCard } from './SupplierCard'
@@ -341,6 +343,14 @@ export function NovaNecessidadeChat() {
         .sort((a, b) => b.rating - a.rating)
     : []
 
+  // Serviço já oferecido pela associação da cidade (somente Cobrança e inadimplência)
+  // Compara cidades ignorando caixa, acentos e espaços extras.
+  const cityKey = (value: string) => normalizeText(value).trim().replace(/\s+/g, ' ')
+  const servicoDaAssociacao =
+    currentFicha?.category === 'Cobrança e inadimplência'
+      ? SERVICOS_DAS_ASSOCIACOES.find((s) => cityKey(s.cidade) === cityKey(currentFicha.city))
+      : undefined
+
   // Handlers for result actions
   const handlePedirProposta = (supplier: Supplier) => {
     if (!currentFicha) return
@@ -632,6 +642,28 @@ export function NovaNecessidadeChat() {
         <section className="space-y-6 animate-bubble-in">
           {/* Ficha Card */}
           <FichaNecessidadeCard ficha={currentFicha} />
+
+          {/* Card: serviço já oferecido pela associação da cidade */}
+          {servicoDaAssociacao && (
+            <div className="bg-white rounded-2xl border border-ponte-orange/40 shadow-xs p-5 sm:p-6">
+              <h3 className="font-heading font-bold text-lg text-ponte-text">
+                A associação de {servicoDaAssociacao.cidade} já oferece algo para isso
+              </h3>
+              <p className="text-sm text-ponte-text-muted mt-1">{servicoDaAssociacao.servico}</p>
+              <a
+                href={servicoDaAssociacao.linkOrigem}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block mt-2 text-sm font-semibold text-ponte-blue hover:underline"
+              >
+                ver no site da associação
+              </a>
+              <p className="text-[11px] text-ponte-text-muted mt-4">
+                Lido no site público da associação em 14/11/2026. Preço e condições: confirme com
+                ela.
+              </p>
+            </div>
+          )}
 
           {/* Compatible Suppliers List */}
           <div className="bg-white rounded-2xl border border-ponte-border p-5 sm:p-6 shadow-xs">

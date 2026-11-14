@@ -3,6 +3,51 @@ import { Category, Supplier, ALL_CATEGORIES, Demand, FichaNecessidade } from '@/
 export { ALL_CATEGORIES }
 export type { Category }
 
+// Lista fixa de serviços que as associações da rede já oferecem (lido nos sites públicos em 14/11/2026).
+export interface ServicoAssociacao {
+  cidade: string
+  servico: string
+  linkOrigem: string
+}
+
+export const SERVICOS_DAS_ASSOCIACOES: ServicoAssociacao[] = [
+  {
+    cidade: 'Mogi Guaçu',
+    servico: 'SCPC / Boa Vista / Equifax (consulta e negativação)',
+    linkOrigem: 'https://www.acimg.com.br/',
+  },
+  {
+    cidade: 'Mogi Mirim',
+    servico: 'SCPC / Boa Vista / Equifax (consulta e negativação)',
+    linkOrigem: 'https://acimm.com.br/analise-de-credito/',
+  },
+  {
+    cidade: 'Itapira',
+    servico: 'SCPC / Boa Vista / Equifax (consulta e negativação)',
+    linkOrigem: 'https://aceitapira.com.br/',
+  },
+  {
+    cidade: 'Socorro',
+    servico: 'SCPC / Boa Vista / Equifax (consulta e negativação)',
+    linkOrigem: 'https://www.ace-socorro.com.br/servicos-ace-socorro-',
+  },
+  {
+    cidade: 'Mococa',
+    servico: 'SCPC / Boa Vista / Equifax (consulta e negativação)',
+    linkOrigem: 'https://www.acimococa.com.br/',
+  },
+  {
+    cidade: 'Espírito Santo do Pinhal',
+    servico: 'SCPC / Boa Vista / Equifax (consulta e negativação)',
+    linkOrigem: 'https://www.acepinhal.com.br/convenios',
+  },
+  {
+    cidade: 'Vargem Grande do Sul',
+    servico: 'SCPC / Boa Vista / Equifax (consulta e negativação)',
+    linkOrigem: 'https://www.acivgsul.com.br/',
+  },
+]
+
 // Região (regional FACESP) de cada cidade usada nas demandas do protótipo.
 export const DEMAND_REGION_BY_CITY: Record<string, string> = {
   'Mogi Guaçu': 'Baixa Mogiana',

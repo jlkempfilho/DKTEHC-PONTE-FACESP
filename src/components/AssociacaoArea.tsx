@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { usePonte } from '@/context/PonteContext'
 import { Demand, DemandReach } from '@/types/ponte'
+import { SERVICOS_DAS_ASSOCIACOES } from '@/data/mockData'
 import { DemandStatusBadge } from './DemandStatusBadge'
 import { FichaNecessidadeCard } from './FichaNecessidadeCard'
 import { SupplierCard } from './SupplierCard'
@@ -16,9 +17,10 @@ import {
   CheckCircle2,
   ShieldCheck,
   Clock,
+  Wrench,
 } from 'lucide-react'
 
-type AssocTab = 'curadoria' | 'fornecedores'
+type AssocTab = 'curadoria' | 'fornecedores' | 'servicos'
 
 export function AssociacaoArea() {
   const [assocTab, setAssocTab] = useState<AssocTab>('curadoria')
@@ -27,6 +29,7 @@ export function AssociacaoArea() {
     [
       { id: 'curadoria', label: 'Curadoria de demandas', icon: Inbox },
       { id: 'fornecedores', label: 'Fornecedores da cidade', icon: Building2 },
+      { id: 'servicos', label: 'Nossos serviços', icon: Wrench },
     ]
 
   return (
@@ -110,7 +113,13 @@ export function AssociacaoArea() {
           </nav>
         </div>
 
-        {assocTab === 'curadoria' ? <CuradoriaTab /> : <FornecedoresCidadeTab />}
+        {assocTab === 'curadoria' ? (
+          <CuradoriaTab />
+        ) : assocTab === 'fornecedores' ? (
+          <FornecedoresCidadeTab />
+        ) : (
+          <NossosServicosTab />
+        )}
       </div>
     </div>
   )
@@ -267,6 +276,54 @@ function CuradoriaTab() {
               </div>
             )
           })}
+        </div>
+      )}
+    </div>
+  )
+}
+
+function NossosServicosTab() {
+  const servicosMogiGuacu = SERVICOS_DAS_ASSOCIACOES.filter((s) => s.cidade === 'Mogi Guaçu')
+
+  return (
+    <div className="space-y-4">
+      <div className="bg-white rounded-2xl border border-ponte-border p-5 sm:p-6 shadow-xs">
+        <h2 className="text-xl sm:text-2xl font-heading font-bold text-ponte-text">
+          Nossos serviços
+        </h2>
+        <p className="text-[11px] text-ponte-text-muted mt-1">
+          Serviços identificados no site público da associação em 14/11/2026. O assistente usa esta
+          lista para indicar o que a casa já oferece antes de abrir uma demanda.
+        </p>
+      </div>
+
+      {servicosMogiGuacu.length === 0 ? (
+        <div className="bg-white rounded-2xl border border-ponte-border p-12 text-center shadow-xs">
+          <div className="w-12 h-12 rounded-2xl bg-slate-100 text-slate-400 flex items-center justify-center mx-auto mb-3">
+            <Wrench className="w-6 h-6" />
+          </div>
+          <h3 className="font-heading font-bold text-base text-ponte-text mb-1">
+            Nenhum serviço identificado ainda.
+          </h3>
+        </div>
+      ) : (
+        <div className="space-y-4">
+          {servicosMogiGuacu.map((servico) => (
+            <div
+              key={servico.linkOrigem}
+              className="bg-white rounded-2xl border border-ponte-border shadow-xs p-5 sm:p-6"
+            >
+              <p className="text-sm font-semibold text-ponte-text">{servico.servico}</p>
+              <a
+                href={servico.linkOrigem}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block mt-2 text-xs font-semibold text-ponte-blue hover:underline"
+              >
+                fonte
+              </a>
+            </div>
+          ))}
         </div>
       )}
     </div>
