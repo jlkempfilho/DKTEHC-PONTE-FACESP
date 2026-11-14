@@ -448,6 +448,7 @@ export function NovaNecessidadeChat() {
       ),
     })
 
+    resetChat()
     setActiveTab('minhas-demandas')
   }
 
@@ -475,6 +476,7 @@ export function NovaNecessidadeChat() {
       ),
     })
 
+    resetChat()
     setActiveTab('minhas-demandas')
   }
 

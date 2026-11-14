@@ -51,6 +51,7 @@ export const SERVICOS_DAS_ASSOCIACOES: ServicoAssociacao[] = [
 // Região (regional FACESP) de cada cidade usada nas demandas do protótipo.
 export const DEMAND_REGION_BY_CITY: Record<string, string> = {
   'Mogi Guaçu': 'Baixa Mogiana',
+  'Mogi Mirim': 'Baixa Mogiana',
   Campinas: 'Campinas',
   'São José do Rio Preto': 'São José do Rio Preto',
   'Presidente Prudente': 'Presidente Prudente',

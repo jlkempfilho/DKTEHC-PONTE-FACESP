@@ -402,7 +402,7 @@ function FornecedoresCidadeTab({ cidade }: { cidade: string }) {
               key={supplier.id}
               className="bg-white rounded-2xl border border-ponte-border shadow-xs"
             >
-              <SupplierCard supplier={supplier} onRequestProposal={() => {}} disabled />
+              <SupplierCard supplier={supplier} hideRequestProposalButton />
               {!supplier.verified && (
                 <div className="px-5 sm:px-6 pb-5 sm:pb-6 -mt-2">
                   <div className="rounded-xl border border-amber-200 bg-amber-50/60 p-4 space-y-3">

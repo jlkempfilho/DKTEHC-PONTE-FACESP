@@ -90,10 +90,13 @@ interface PonteContextType {
 
 const PonteContext = createContext<PonteContextType | undefined>(undefined)
 
-const INITIAL_MESSAGE: ChatMessage = {
-  id: 'msg-init',
+// Mensagem de abertura do chat (usada no primeiro load e em cada reset),
+// já com os chips de opções clicáveis.
+const OPENING_MESSAGE: ChatMessage = {
+  id: `msg-init-${Date.now()}`,
   sender: 'assistant',
-  text: 'Olá! Escreva com as suas palavras qual problema quer resolver.',
+  text: 'Olá! Selecione uma opção ou escreva com as suas palavras a sua dúvida ou necessidade.',
+  customContent: 'opening-chips',
   timestamp: Date.now(),
 }
 
@@ -107,7 +110,7 @@ export function PonteProvider({ children }: { children: ReactNode }) {
   const [simulatedSupplierId, setSimulatedSupplierId] = useState<string>(DEFAULT_SUPPLIER_ID)
 
   // Chat conversation state
-  const [chatMessages, setChatMessages] = useState<ChatMessage[]>([INITIAL_MESSAGE])
+  const [chatMessages, setChatMessages] = useState<ChatMessage[]>([OPENING_MESSAGE])
   const [chatStep, setChatStep] = useState<number>(0)
   const [detectedCategory, setDetectedCategory] = useState<Category>('Solução sob medida')
   const [freeText, setFreeText] = useState<string>('')
@@ -122,15 +125,7 @@ export function PonteProvider({ children }: { children: ReactNode }) {
   const [directProposalSupplier, setDirectProposalSupplier] = useState<Supplier | null>(null)
 
   const resetChat = () => {
-    setChatMessages([
-      {
-        id: `msg-init-${Date.now()}`,
-        sender: 'assistant',
-        text: 'Olá! Selecione uma opção ou escreva com as suas palavras a sua dúvida ou necessidade.',
-        customContent: 'opening-chips',
-        timestamp: Date.now(),
-      },
-    ])
+    setChatMessages([{ ...OPENING_MESSAGE, id: `msg-init-${Date.now()}`, timestamp: Date.now() }])
     setChatStep(0)
     setDetectedCategory('Solução sob medida')
     setFreeText('')

@@ -6,8 +6,10 @@ import { CheckCircle2, Clock, MapPin, Send, Star, Quote, Building } from 'lucide
 interface SupplierCardProps {
   supplier: Supplier
   matchReason?: string
-  onRequestProposal: (supplier: Supplier) => void
+  onRequestProposal?: (supplier: Supplier) => void
   disabled?: boolean
+  /** Esconde o botão "Pedir proposta" (usado nas telas da Associação). */
+  hideRequestProposalButton?: boolean
 }
 
 export function SupplierCard({
@@ -15,6 +17,7 @@ export function SupplierCard({
   matchReason,
   onRequestProposal,
   disabled = false,
+  hideRequestProposalButton = false,
 }: SupplierCardProps) {
   return (
     <div className="bg-white rounded-2xl border border-ponte-border p-5 sm:p-6 shadow-xs card-lift flex flex-col justify-between transition-all">
@@ -97,16 +100,18 @@ export function SupplierCard({
       </div>
 
       {/* CTA Button */}
-      <div className="pt-1 flex items-center justify-end">
-        <Button
-          onClick={() => onRequestProposal(supplier)}
-          disabled={disabled}
-          className="w-full sm:w-auto bg-ponte-orange hover:bg-ponte-orange-hover text-white rounded-full px-5 py-2 text-sm font-semibold shadow-xs flex items-center justify-center gap-2 transition-transform active:scale-95"
-        >
-          <Send className="w-4 h-4" />
-          Pedir proposta
-        </Button>
-      </div>
+      {!hideRequestProposalButton && (
+        <div className="pt-1 flex items-center justify-end">
+          <Button
+            onClick={() => onRequestProposal?.(supplier)}
+            disabled={disabled}
+            className="w-full sm:w-auto bg-ponte-orange hover:bg-ponte-orange-hover text-white rounded-full px-5 py-2 text-sm font-semibold shadow-xs flex items-center justify-center gap-2 transition-transform active:scale-95"
+          >
+            <Send className="w-4 h-4" />
+            Pedir proposta
+          </Button>
+        </div>
+      )}
     </div>
   )
 }
