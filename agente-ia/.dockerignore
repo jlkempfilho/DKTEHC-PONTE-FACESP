@@ -1,0 +1,9 @@
+.env
+.venv
+.git
+.segredos
+curadoria
+*.db
+*.log
+__pycache__
+infra
