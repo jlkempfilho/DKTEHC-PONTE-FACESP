@@ -3,6 +3,7 @@ import { usePonte } from '@/context/PonteContext'
 import { ALL_STATUSES, Demand, DemandStatus } from '@/types/ponte'
 import { DemandStatusBadge } from './DemandStatusBadge'
 import { FichaNecessidadeCard } from './FichaNecessidadeCard'
+import { PropostasRecebidas, ReviewDisplay } from './PropostasRecebidas'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import {
@@ -144,6 +145,14 @@ export function MinhasDemandasTab() {
                   })
                 }}
               />
+
+              {/* Propostas recebidas, aceitar/iniciar piloto e avaliação */}
+              {demand.status !== 'Aguardando esclarecimento' && (
+                <PropostasRecebidas demand={demand} />
+              )}
+
+              {/* Avaliação já enviada (demanda concluída) */}
+              {demand.status === 'Concluída' && demand.review && <ReviewDisplay demand={demand} />}
             </div>
           ))}
         </div>

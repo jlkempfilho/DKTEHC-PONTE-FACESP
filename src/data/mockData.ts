@@ -53,6 +53,7 @@ export const SEED_DEMANDS: Demand[] = [
     ficha: SEED_FICHAS['seed-1'],
     ownerCompany: 'Padaria Pão da Serra',
     reach: 'local',
+    proposals: [],
   },
   {
     id: 'seed-demand-2',
@@ -64,6 +65,7 @@ export const SEED_DEMANDS: Demand[] = [
     ficha: SEED_FICHAS['seed-2'],
     ownerCompany: 'Ateliê Bordados da Lu',
     reach: 'local',
+    proposals: [],
   },
 ]
 

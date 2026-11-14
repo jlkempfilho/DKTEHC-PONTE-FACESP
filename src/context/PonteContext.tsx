@@ -6,10 +6,16 @@ import {
   DemandStatus,
   DemandReach,
   FichaNecessidade,
+  Proposal,
   Supplier,
   UserRole,
 } from '@/types/ponte'
 import { MOCK_SUPPLIERS, SEED_DEMANDS } from '@/data/mockData'
+
+// Fornecedor simulado padrão: verificado e da categoria "Cobrança e inadimplência"
+const DEFAULT_SUPPLIER_ID =
+  MOCK_SUPPLIERS.find((s) => s.verified && s.category === 'Cobrança e inadimplência')?.id ||
+  MOCK_SUPPLIERS[0].id
 
 export interface ChatMessage {
   id: string
@@ -41,6 +47,18 @@ interface PonteContextType {
   updateDemandStatus: (demandId: string, newStatus: DemandStatus) => void
   updateDemand: (demandId: string, changes: Partial<Demand>) => void
   verifySupplier: (supplierId: string, city: string) => void
+
+  // Supplier role state (shared in-memory)
+  simulatedSupplierId: string
+  setSimulatedSupplierId: (supplierId: string) => void
+
+  // Proposals lifecycle (shared in-memory)
+  submitProposal: (
+    demandId: string,
+    proposal: Omit<Proposal, 'id' | 'demandId' | 'createdAt'>,
+  ) => void
+  acceptProposal: (demandId: string, proposalId: string) => void
+  concludeWithReview: (demandId: string, stars: number, comment: string) => void
 
   // Chat state (preserved across role/tab switching)
   chatMessages: ChatMessage[]
@@ -85,6 +103,8 @@ export function PonteProvider({ children }: { children: ReactNode }) {
   // ONE shared in-memory store visible to all roles (no backend, no login)
   const [demands, setDemands] = useState<Demand[]>(SEED_DEMANDS)
   const [suppliers, setSuppliers] = useState<Supplier[]>(MOCK_SUPPLIERS)
+  // Fornecedor sendo simulado no papel "Fornecedor"
+  const [simulatedSupplierId, setSimulatedSupplierId] = useState<string>(DEFAULT_SUPPLIER_ID)
 
   // Chat conversation state
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([INITIAL_MESSAGE])
@@ -148,6 +168,7 @@ export function PonteProvider({ children }: { children: ReactNode }) {
       ficha,
       requestedSupplierName,
       reach: 'local',
+      proposals: [],
     }
 
     setDemands((prev) => [newDemand, ...prev])
@@ -168,6 +189,68 @@ export function PonteProvider({ children }: { children: ReactNode }) {
     )
   }
 
+  const submitProposal: PonteContextType['submitProposal'] = (demandId, proposal) => {
+    const newProposal: Proposal = {
+      ...proposal,
+      id: `proposal-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
+      demandId,
+      createdAt: new Date().toLocaleDateString('pt-BR', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+      }),
+    }
+
+    setDemands((prev) =>
+      prev.map((d) => (d.id === demandId ? { ...d, proposals: [...d.proposals, newProposal] } : d)),
+    )
+  }
+
+  const acceptProposal = (demandId: string, proposalId: string) => {
+    setDemands((prev) =>
+      prev.map((d) =>
+        d.id === demandId ? { ...d, status: 'Em andamento', acceptedProposalId: proposalId } : d,
+      ),
+    )
+  }
+
+  const concludeWithReview = (demandId: string, stars: number, comment: string) => {
+    setDemands((prev) => {
+      const target = prev.find((d) => d.id === demandId)
+      const accepted = target?.proposals.find((p) => p.id === target?.acceptedProposalId)
+
+      // Recalcula média e nº de avaliações do fornecedor aceito (estado compartilhado)
+      if (accepted) {
+        setSuppliers((prevSuppliers) =>
+          prevSuppliers.map((s) => {
+            if (s.id !== accepted.supplierId) return s
+            const totalStars = s.rating * s.reviewsCount + stars
+            const totalCount = s.reviewsCount + 1
+            return {
+              ...s,
+              rating: Math.round((totalStars / totalCount) * 10) / 10,
+              reviewsCount: totalCount,
+            }
+          }),
+        )
+      }
+
+      return prev.map((d) =>
+        d.id === demandId
+          ? {
+              ...d,
+              status: 'Concluída',
+              review: {
+                stars,
+                comment,
+                supplierId: accepted?.supplierId || '',
+              },
+            }
+          : d,
+      )
+    })
+  }
+
   return (
     <PonteContext.Provider
       value={{
@@ -181,6 +264,11 @@ export function PonteProvider({ children }: { children: ReactNode }) {
         updateDemandStatus,
         updateDemand,
         verifySupplier,
+        simulatedSupplierId,
+        setSimulatedSupplierId,
+        submitProposal,
+        acceptProposal,
+        concludeWithReview,
         chatMessages,
         setChatMessages,
         chatStep,
