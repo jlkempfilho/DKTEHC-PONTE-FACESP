@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { usePonte } from '@/context/PonteContext'
 import { Demand, Proposal, Supplier } from '@/types/ponte'
+import { DEMAND_REGION_BY_CITY } from '@/data/mockData'
 import { DemandStatusBadge } from './DemandStatusBadge'
 import { FichaNecessidadeCard } from './FichaNecessidadeCard'
 import { StarRating } from './StarRating'
@@ -221,6 +222,11 @@ function SupplierProfileCard({ supplier }: { supplier: Supplier }) {
   )
 }
 
+// Região (regional FACESP) de uma cidade; cidades fora do mapa ficam em "Outras".
+function regionOfCity(city: string): string {
+  return DEMAND_REGION_BY_CITY[city] || 'Outras'
+}
+
 function DemandasAbertasTab({ supplier }: { supplier: Supplier }) {
   const { demands, submitProposal } = usePonte()
   const [showOtherCategories, setShowOtherCategories] = useState(false)
@@ -237,10 +243,13 @@ function DemandasAbertasTab({ supplier }: { supplier: Supplier }) {
         return d.requestedSupplierName === supplier.name
       }
 
-      // Demanda comum: categoria do fornecedor + (alcance estadual OU mesma cidade);
-      // o checkbox remove a regra de categoria
+      // Demanda comum: categoria do fornecedor + (alcance estadual OU mesma região
+      // para demanda regional OU mesma cidade); o checkbox remove a regra de categoria
       const categoryOk = showOtherCategories || d.category === supplier.category
-      const reachOk = d.reach === 'estadual' || d.city === supplier.city
+      const reachOk =
+        d.reach === 'estadual' ||
+        d.city === supplier.city ||
+        (d.reach === 'regional' && regionOfCity(d.city) === regionOfCity(supplier.city))
       return categoryOk && reachOk
     })
   }, [demands, supplier, showOtherCategories])

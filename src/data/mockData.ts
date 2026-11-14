@@ -695,7 +695,7 @@ export const CATEGORY_QUESTIONS: Record<Category, CategoryQuestionDef[]> = {
       question: 'Você já investiu em anúncios na internet?',
       options: [
         'Nunca anunciei',
-        'Já impulsivei posts sem muito resultado',
+        'Já impulsionei posts sem muito resultado',
         'Já anuncio com frequência',
       ],
     },
