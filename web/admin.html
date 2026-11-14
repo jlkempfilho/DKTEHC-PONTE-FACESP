@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Painel do Curador - protótipo</title>
+<style>
+:root{--bg:#F1F4F8;--card:#FFFFFF;--ink:#132036;--muted:#56637A;--line:#D5DCE6;--brand:#1E5A8C;--ok:#1F6B45;--warn:#9A3412}
+@media (prefers-color-scheme: dark){:root{--bg:#0E1626;--card:#16213A;--ink:#EAF0F8;--muted:#A4B1C7;--line:#2B3A5C;--brand:#6FA8DC;--ok:#7BD3A2;--warn:#FFB38A}}
+[hidden]{display:none!important}
+*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 "Segoe UI",system-ui,sans-serif}
+.wrap{max-width:1100px;margin:0 auto;padding:20px 16px;display:flex;flex-direction:column;gap:16px}
+h1{margin:0;font-size:24px} h2{margin:0 0 8px;font-size:18px}
+nav{display:flex;gap:8px;flex-wrap:wrap} nav button,button{font:600 14px inherit;border:1px solid var(--line);background:var(--card);color:var(--brand);border-radius:10px;padding:8px 14px;cursor:pointer;min-height:40px}
+nav button[aria-pressed="true"]{background:var(--brand);color:var(--card)}
+section{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14px} th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+input,textarea{font:inherit;width:100%;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:6px 8px}
+textarea{min-height:70px} label{display:block;font-size:13px;color:var(--muted);margin-top:8px}
+a{color:var(--brand)} .muted{color:var(--muted);font-size:13px} .ok{color:var(--ok)} .erro{color:var(--warn)}
+.kpis{display:flex;gap:12px;flex-wrap:wrap} .kpi{border:1px solid var(--line);border-radius:12px;padding:12px 16px;min-width:140px} .kpi b{display:block;font-size:24px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header><h1>Painel do Curador</h1><p class="muted">Protótipo do Hackathon Connect 7.0 (desafio FACESP), com dados fictícios. Tudo o que é editado aqui fica versionado e auditado. Os indicadores não mostram dado pessoal.</p></header>
+  <section id="login">
+    <label for="token">Chave de acesso do curador</label>
+    <input id="token" type="password" autocomplete="off">
+    <p><button id="entrar" type="button">Entrar</button> <span id="msg-login" class="muted"></span></p>
+  </section>
+  <nav id="abas" hidden>
+    <button type="button" data-aba="indicadores" aria-pressed="true">Indicadores</button>
+    <button type="button" data-aba="servicos" aria-pressed="false">Catálogo de serviços</button>
+    <button type="button" data-aba="termos" aria-pressed="false">Vocabulário</button>
+    <button type="button" data-aba="conhecimento" aria-pressed="false">Conhecimento</button>
+    <button type="button" data-aba="lacunas" aria-pressed="false">Lacunas</button>
+  </nav>
+  <section id="conteudo" hidden></section>
+</div>
+<script src="/admin.js" defer></script>
+</body>
+</html>

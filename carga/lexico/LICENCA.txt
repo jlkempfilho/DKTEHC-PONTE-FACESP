@@ -1,0 +1,2 @@
+Dicionário pt_BR do projeto VERO (LibreOffice), licenciado sob LGPLv3 e MPL. Fonte: https://github.com/LibreOffice/dictionaries/tree/master/pt_BR
+Usado só para montar o léxico (palavras conhecidas) do agente; ver README_pt_BR.txt.

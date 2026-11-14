@@ -1,0 +1,544 @@
+[
+ {
+  "id": "sobre-associacao",
+  "nome": "O que a associação comercial faz por você",
+  "descricao": "A associação comercial ajuda o lojista a encontrar e testar soluções de tecnologia que façam sentido para a loja. Quando não existe solução pronta, ela junta relatos parecidos de outras lojas e leva a demanda para startups.",
+  "assuntos": [
+   "o que a associação faz",
+   "associação comercial",
+   "curadoria",
+   "quem são vocês",
+   "como funciona"
+  ],
+  "atribuicao": "Curadoria da associação comercial local, com apoio da federação.",
+  "limites": "A associação indica e acompanha o teste; quem contrata a solução é o lojista.",
+  "territorio": [
+   {
+    "municipio": "todos",
+    "unidade": "Associação comercial"
+   }
+  ],
+  "canais": [
+   {
+    "tipo": "WhatsApp",
+    "valor": "este mesmo canal"
+   }
+  ],
+  "documentos": [],
+  "urgencia": "",
+  "encaminhamento": "Conte o problema da sua loja: a curadoria indica uma solução ou registra a demanda.",
+  "horarios": "Atendimento automático 24h; curadoria em horário comercial.",
+  "fonte_url": "https://catalogo.exemplo.com.br/curadoria",
+  "fonte_data": "2026-11-14",
+  "vigencia": "2026-11-14"
+ },
+ {
+  "id": "falar-associacao",
+  "nome": "Falar com a curadoria da associação",
+  "descricao": "Atendimento por uma pessoa da curadoria da associação comercial.",
+  "assuntos": [
+   "falar com alguém",
+   "atendente",
+   "curadoria",
+   "telefone da associação",
+   "whatsapp da associação",
+   "endereço"
+  ],
+  "atribuicao": "Curadoria da associação comercial.",
+  "limites": "Horário comercial.",
+  "territorio": [
+   {
+    "municipio": "todos",
+    "unidade": "Associação comercial"
+   }
+  ],
+  "canais": [
+   {
+    "tipo": "WhatsApp",
+    "valor": "este mesmo canal"
+   }
+  ],
+  "documentos": [],
+  "urgencia": "",
+  "encaminhamento": "Peça para falar com uma pessoa e a conversa é passada para a curadoria.",
+  "horarios": "Segunda a sexta, horário comercial.",
+  "fonte_url": "https://catalogo.exemplo.com.br/curadoria",
+  "fonte_data": "2026-11-14",
+  "vigencia": "2026-11-14"
+ },
+ {
+  "id": "registrar-demanda",
+  "nome": "Registrar uma necessidade sem solução pronta",
+  "descricao": "Quando nenhuma solução do catálogo serve, a associação registra a necessidade, junta com relatos parecidos de outras lojas e leva a demanda para startups avaliarem.",
+  "assuntos": [
+   "não achei solução",
+   "nada serve",
+   "não existe",
+   "preciso de algo diferente",
+   "demanda",
+   "sugestão",
+   "não uso esse sistema"
+  ],
+  "atribuicao": "Curadoria da associação comercial, que encaminha às startups.",
+  "limites": "Registrar a demanda não garante que uma solução será desenvolvida.",
+  "territorio": [
+   {
+    "municipio": "todos",
+    "unidade": "Associação comercial"
+   }
+  ],
+  "canais": [
+   {
+    "tipo": "WhatsApp",
+    "valor": "este mesmo canal"
+   }
+  ],
+  "documentos": [
+   {
+    "nome": "Segmento da loja",
+    "obrigatorio": true
+   },
+   {
+    "nome": "Como resolve hoje",
+    "obrigatorio": true
+   },
+   {
+    "nome": "Sistemas que já usa",
+    "obrigatorio": false
+   },
+   {
+    "nome": "Resultado esperado",
+    "obrigatorio": true
+   }
+  ],
+  "urgencia": "",
+  "encaminhamento": "Responda às perguntas da ficha de demanda; a associação avisa quando houver proposta de startup.",
+  "horarios": "Sem custo para o lojista.",
+  "fonte_url": "https://catalogo.exemplo.com.br/curadoria",
+  "fonte_data": "2026-11-14",
+  "vigencia": "2026-11-14"
+ },
+ {
+  "id": "estoque-whatsapp",
+  "nome": "Consulta de estoque direto no WhatsApp",
+  "descricao": "Responde ao cliente se o produto está disponível sem o atendente parar o balcão para conferir. Para quem: lojas que recebem pedidos por mensagem e controlam estoque em planilha ou no Bling.",
+  "assuntos": [
+   "estoque",
+   "produto disponível",
+   "tem no estoque",
+   "demora para confirmar",
+   "pedido por mensagem",
+   "conferir estoque",
+   "planilha",
+   "bling"
+  ],
+  "atribuicao": "EstoqueZap (solução fictícia da demo), indicada pela curadoria da associação comercial.",
+  "limites": "Em produção com 40 lojas. Não atende estoque em caderno nem ERP sem integração.",
+  "territorio": [
+   {
+    "municipio": "todos",
+    "unidade": "Curadoria da associação comercial"
+   }
+  ],
+  "canais": [
+   {
+    "tipo": "demonstração",
+    "valor": "https://estoque-whatsapp.exemplo.com.br/demo"
+   }
+  ],
+  "documentos": [
+   {
+    "nome": "Estoque em planilha Google ou no Bling",
+    "obrigatorio": true
+   },
+   {
+    "nome": "WhatsApp Business",
+    "obrigatorio": true
+   }
+  ],
+  "urgencia": "",
+  "encaminhamento": "Teste gratuito de 14 dias com 20 produtos; resultado esperado: confirmar disponibilidade em menos de 1 minuto.",
+  "horarios": "Custo indicativo: a partir de R$ 59 por mês",
+  "fonte_url": "https://catalogo.exemplo.com.br/curadoria",
+  "fonte_data": "2026-11-14",
+  "vigencia": "2026-11-14"
+ },
+ {
+  "id": "estoque-erp",
+  "nome": "Controle de estoque com leitor de código de barras",
+  "descricao": "Organiza entrada e saída de produtos e avisa quando um item está acabando. Para quem: lojas físicas que ainda controlam estoque no caderno.",
+  "assuntos": [
+   "controle de estoque",
+   "caderno",
+   "código de barras",
+   "produto acabando",
+   "inventário"
+  ],
+  "atribuicao": "Prateleira Certa (solução fictícia da demo), indicada pela curadoria da associação comercial.",
+  "limites": "Em produção. Exige cadastrar os produtos antes de usar.",
+  "territorio": [
+   {
+    "municipio": "todos",
+    "unidade": "Curadoria da associação comercial"
+   }
+  ],
+  "canais": [
+   {
+    "tipo": "demonstração",
+    "valor": "https://estoque-erp.exemplo.com.br/demo"
+   }
+  ],
+  "documentos": [
+   {
+    "nome": "Computador ou celular Android",
+    "obrigatorio": true
+   },
+   {
+    "nome": "Leitor de código de barras (opcional)",
+    "obrigatorio": true
+   }
+  ],
+  "urgencia": "",
+  "encaminhamento": "Implantação assistida de 2 horas e piloto de 30 dias; resultado esperado: inventário fechando sem diferença.",
+  "horarios": "Custo indicativo: R$ 89 por mês",
+  "fonte_url": "https://catalogo.exemplo.com.br/curadoria",
+  "fonte_data": "2026-11-14",
+  "vigencia": "2026-11-14"
+ },
+ {
+  "id": "contratacao",
+  "nome": "Recrutamento de vendedores e balconistas",
+  "descricao": "Divulga a vaga, faz a triagem e agenda entrevistas com candidatos da região. Para quem: comércios que precisam contratar e não têm RH.",
+  "assuntos": [
+   "contratar",
+   "vaga",
+   "funcionário",
+   "vendedor",
+   "balconista",
+   "recrutamento",
+   "empregado",
+   "rh"
+  ],
+  "atribuicao": "VagaLocal (solução fictícia da demo), indicada pela curadoria da associação comercial.",
+  "limites": "Em produção na região. Não faz folha de pagamento.",
+  "territorio": [
+   {
+    "municipio": "todos",
+    "unidade": "Curadoria da associação comercial"
+   }
+  ],
+  "canais": [
+   {
+    "tipo": "demonstração",
+    "valor": "https://contratacao.exemplo.com.br/demo"
+   }
+  ],
+  "documentos": [
+   {
+    "nome": "Descrição da vaga",
+    "obrigatorio": true
+   },
+   {
+    "nome": "Faixa salarial",
+    "obrigatorio": true
+   }
+  ],
+  "urgencia": "",
+  "encaminhamento": "Primeira vaga sem custo; resultado esperado: 3 candidatos triados em 7 dias.",
+  "horarios": "Custo indicativo: R$ 120 por vaga após a primeira",
+  "fonte_url": "https://catalogo.exemplo.com.br/curadoria",
+  "fonte_data": "2026-11-14",
+  "vigencia": "2026-11-14"
+ },
+ {
+  "id": "treinamento",
+  "nome": "Treinamento rápido da equipe de vendas",
+  "descricao": "Trilhas curtas no celular sobre atendimento, vendas e pós-venda, com acompanhamento pelo dono. Para quem: lojas com equipe de 2 a 20 pessoas.",
+  "assuntos": [
+   "treinar",
+   "treinamento",
+   "capacitar equipe",
+   "curso",
+   "atendimento ao cliente",
+   "equipe"
+  ],
+  "atribuicao": "Trilha Varejo (solução fictícia da demo), indicada pela curadoria da associação comercial.",
+  "limites": "Em produção. Conteúdo genérico de varejo; não cria treinamento específico do produto da loja.",
+  "territorio": [
+   {
+    "municipio": "todos",
+    "unidade": "Curadoria da associação comercial"
+   }
+  ],
+  "canais": [
+   {
+    "tipo": "demonstração",
+    "valor": "https://treinamento.exemplo.com.br/demo"
+   }
+  ],
+  "documentos": [
+   {
+    "nome": "Celular com internet para cada vendedor",
+    "obrigatorio": true
+   }
+  ],
+  "urgencia": "",
+  "encaminhamento": "Piloto de 15 dias com 3 vendedores; resultado esperado: trilha básica concluída.",
+  "horarios": "Custo indicativo: R$ 15 por vendedor por mês",
+  "fonte_url": "https://catalogo.exemplo.com.br/curadoria",
+  "fonte_data": "2026-11-14",
+  "vigencia": "2026-11-14"
+ },
+ {
+  "id": "catalogo-vendedor",
+  "nome": "Catálogo digital para o vendedor",
+  "descricao": "Monta um catálogo com foto e preço que o vendedor manda pelo WhatsApp em segundos. Para quem: lojas que vendem por mensagem e mandam foto produto a produto.",
+  "assuntos": [
+   "catálogo",
+   "foto do produto",
+   "mandar preço",
+   "vitrine",
+   "catálogo digital",
+   "lista de produtos"
+  ],
+  "atribuicao": "VitrineZap (solução fictícia da demo), indicada pela curadoria da associação comercial.",
+  "limites": "Em produção. Não processa pagamento.",
+  "territorio": [
+   {
+    "municipio": "todos",
+    "unidade": "Curadoria da associação comercial"
+   }
+  ],
+  "canais": [
+   {
+    "tipo": "demonstração",
+    "valor": "https://catalogo-vendedor.exemplo.com.br/demo"
+   }
+  ],
+  "documentos": [
+   {
+    "nome": "Fotos dos produtos",
+    "obrigatorio": true
+   },
+   {
+    "nome": "Lista de preços",
+    "obrigatorio": true
+   }
+  ],
+  "urgencia": "",
+  "encaminhamento": "Teste gratuito de 7 dias com 30 produtos; resultado esperado: catálogo enviado pelo vendedor no primeiro dia.",
+  "horarios": "Custo indicativo: gratuito até 50 produtos",
+  "fonte_url": "https://catalogo.exemplo.com.br/curadoria",
+  "fonte_data": "2026-11-14",
+  "vigencia": "2026-11-14"
+ },
+ {
+  "id": "crm-vendedor",
+  "nome": "Acompanhamento de vendedores e pós-venda",
+  "descricao": "O dono vê os contatos de cada vendedor e recebe lembrete de mensagem e de pós-venda. Para quem: lojas com 2 ou mais vendedores atendendo por WhatsApp.",
+  "assuntos": [
+   "crm",
+   "pós-venda",
+   "acompanhar vendedor",
+   "lembrete",
+   "cliente sumiu",
+   "follow up",
+   "contatos dos clientes"
+  ],
+  "atribuicao": "Lembra Cliente (solução fictícia da demo), indicada pela curadoria da associação comercial.",
+  "limites": "Em fase de piloto (beta). Não integra com ERP.",
+  "territorio": [
+   {
+    "municipio": "todos",
+    "unidade": "Curadoria da associação comercial"
+   }
+  ],
+  "canais": [
+   {
+    "tipo": "demonstração",
+    "valor": "https://crm-vendedor.exemplo.com.br/demo"
+   }
+  ],
+  "documentos": [
+   {
+    "nome": "WhatsApp Business de cada vendedor",
+    "obrigatorio": true
+   }
+  ],
+  "urgencia": "",
+  "encaminhamento": "Piloto de 30 dias com 2 vendedores; resultado esperado: pós-venda feito em 80% das vendas.",
+  "horarios": "Custo indicativo: R$ 49 por vendedor por mês",
+  "fonte_url": "https://catalogo.exemplo.com.br/curadoria",
+  "fonte_data": "2026-11-14",
+  "vigencia": "2026-11-14"
+ },
+ {
+  "id": "venda-online",
+  "nome": "Primeira venda em marketplace",
+  "descricao": "Prepara a conta, cadastra os primeiros produtos e acompanha a primeira venda no marketplace. Para quem: lojas físicas que nunca venderam pela internet.",
+  "assuntos": [
+   "vender na internet",
+   "vender online",
+   "marketplace",
+   "mercado livre",
+   "shopee",
+   "loja virtual",
+   "vender mais"
+  ],
+  "atribuicao": "Primeira Venda (solução fictícia da demo), indicada pela curadoria da associação comercial.",
+  "limites": "Serviço de consultoria em produção. Não inclui logística.",
+  "territorio": [
+   {
+    "municipio": "todos",
+    "unidade": "Curadoria da associação comercial"
+   }
+  ],
+  "canais": [
+   {
+    "tipo": "demonstração",
+    "valor": "https://venda-online.exemplo.com.br/demo"
+   }
+  ],
+  "documentos": [
+   {
+    "nome": "CNPJ ativo",
+    "obrigatorio": true
+   },
+   {
+    "nome": "Fotos dos produtos",
+    "obrigatorio": true
+   },
+   {
+    "nome": "Estoque disponível",
+    "obrigatorio": true
+   }
+  ],
+  "urgencia": "",
+  "encaminhamento": "Diagnóstico gratuito de 1 hora; resultado esperado: 10 produtos publicados em 15 dias.",
+  "horarios": "Custo indicativo: R$ 390 o pacote inicial",
+  "fonte_url": "https://catalogo.exemplo.com.br/curadoria",
+  "fonte_data": "2026-11-14",
+  "vigencia": "2026-11-14"
+ },
+ {
+  "id": "trazer-clientes",
+  "nome": "Campanhas para trazer clientes para a loja",
+  "descricao": "Cria promoções e campanhas locais no Instagram e no WhatsApp para atrair clientes da região. Para quem: comércios de bairro que querem mais movimento na loja.",
+  "assuntos": [
+   "trazer clientes",
+   "mais clientes",
+   "movimento",
+   "divulgar",
+   "instagram",
+   "promoção",
+   "anúncio",
+   "vender mais"
+  ],
+  "atribuicao": "Bairro em Alta (solução fictícia da demo), indicada pela curadoria da associação comercial.",
+  "limites": "Em produção. Verba de anúncio é à parte.",
+  "territorio": [
+   {
+    "municipio": "todos",
+    "unidade": "Curadoria da associação comercial"
+   }
+  ],
+  "canais": [
+   {
+    "tipo": "demonstração",
+    "valor": "https://trazer-clientes.exemplo.com.br/demo"
+   }
+  ],
+  "documentos": [
+   {
+    "nome": "Instagram da loja",
+    "obrigatorio": true
+   },
+   {
+    "nome": "Produtos ou serviços para divulgar",
+    "obrigatorio": true
+   }
+  ],
+  "urgencia": "",
+  "encaminhamento": "Primeira campanha de 7 dias assistida; resultado esperado: clientes novos medidos por cupom.",
+  "horarios": "Custo indicativo: R$ 150 por campanha mais verba",
+  "fonte_url": "https://catalogo.exemplo.com.br/curadoria",
+  "fonte_data": "2026-11-14",
+  "vigencia": "2026-11-14"
+ },
+ {
+  "id": "entrega-local",
+  "nome": "Entrega no mesmo dia na cidade",
+  "descricao": "Motoboys parceiros fazem a entrega local com rastreio pelo WhatsApp. Para quem: lojas que vendem por mensagem e precisam entregar no mesmo dia.",
+  "assuntos": [
+   "entrega",
+   "motoboy",
+   "frete",
+   "delivery",
+   "entregar"
+  ],
+  "atribuicao": "Leva Já (solução fictícia da demo), indicada pela curadoria da associação comercial.",
+  "limites": "Em produção em cidades com mais de 50 mil habitantes.",
+  "territorio": [
+   {
+    "municipio": "todos",
+    "unidade": "Curadoria da associação comercial"
+   }
+  ],
+  "canais": [
+   {
+    "tipo": "demonstração",
+    "valor": "https://entrega-local.exemplo.com.br/demo"
+   }
+  ],
+  "documentos": [
+   {
+    "nome": "Endereço de retirada",
+    "obrigatorio": true
+   },
+   {
+    "nome": "Horário de coleta",
+    "obrigatorio": true
+   }
+  ],
+  "urgencia": "",
+  "encaminhamento": "5 primeiras entregas com desconto; resultado esperado: entrega em até 3 horas.",
+  "horarios": "Custo indicativo: a partir de R$ 9 por entrega",
+  "fonte_url": "https://catalogo.exemplo.com.br/curadoria",
+  "fonte_data": "2026-11-14",
+  "vigencia": "2026-11-14"
+ },
+ {
+  "id": "emergencia",
+  "nome": "Emergência: risco imediato",
+  "descricao": "Situação de risco à vida ou à integridade de alguém agora.",
+  "assuntos": [
+   "emergência",
+   "risco de vida",
+   "agressão agora",
+   "socorro",
+   "assalto",
+   "ameaça imediata"
+  ],
+  "atribuicao": "Polícia Militar (190). O atendimento da associação não é canal de emergência.",
+  "limites": "Este atendimento não substitui os serviços de emergência.",
+  "territorio": [
+   {
+    "municipio": "todos",
+    "unidade": "Polícia Militar"
+   }
+  ],
+  "canais": [
+   {
+    "tipo": "telefone",
+    "valor": "190"
+   }
+  ],
+  "documentos": [],
+  "urgencia": "CRÍTICO: sempre orientar 190 na primeira resposta e escalonar para humano.",
+  "encaminhamento": "Ligar 190 imediatamente.",
+  "horarios": "24h",
+  "fonte_url": "https://catalogo.exemplo.com.br/curadoria",
+  "fonte_data": "2026-11-14",
+  "vigencia": "2026-11-14"
+ }
+]

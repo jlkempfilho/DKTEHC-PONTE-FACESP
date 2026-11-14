@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Curadoria da associação - protótipo</title>
+<style>
+:root{--bg:#F1F4F8;--card:#FFFFFF;--ink:#132036;--muted:#56637A;--line:#D5DCE6;--brand:#1E5A8C;--ok:#1F6B45;--warn:#9A3412;--soft:#EAF1F8}
+@media (prefers-color-scheme: dark){:root{--bg:#0E1626;--card:#16213A;--ink:#EAF0F8;--muted:#A4B1C7;--line:#2B3A5C;--brand:#6FA8DC;--ok:#7BD3A2;--warn:#FFB38A;--soft:#1C2A47}}
+[hidden]{display:none!important}
+*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 "Segoe UI",system-ui,sans-serif}
+.wrap{max-width:1100px;margin:0 auto;padding:20px 16px;display:flex;flex-direction:column;gap:16px}
+h1{margin:0;font-size:24px} h2{margin:0 0 8px;font-size:18px} h3{margin:12px 0 4px;font-size:15px}
+nav{display:flex;gap:8px;flex-wrap:wrap}
+button,.btn{font:600 14px inherit;border:1px solid var(--line);background:var(--card);color:var(--brand);border-radius:10px;padding:8px 14px;cursor:pointer;min-height:40px}
+button.pri{background:var(--brand);color:var(--card)} nav button[aria-pressed="true"]{background:var(--brand);color:var(--card)}
+section,article{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+input,textarea,select{font:inherit;width:100%;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:6px 8px}
+textarea{min-height:60px} label{display:block;font-size:13px;color:var(--muted);margin-top:8px}
+.muted{color:var(--muted);font-size:13px} .ok{color:var(--ok)} .erro{color:var(--warn)}
+.etapa{display:grid;grid-template-columns:1fr 1fr;gap:12px;border-top:1px solid var(--line);padding:10px 0}
+.origem{background:var(--soft);border-radius:8px;padding:8px;font-size:13px;white-space:pre-wrap}
+.selo{display:inline-block;border-radius:999px;padding:1px 8px;font-size:12px;border:1px solid var(--line)} .selo.ok{border-color:var(--ok)} .selo.erro{border-color:var(--warn)}
+.lista{display:flex;flex-direction:column;gap:12px} .linha{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.grade{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
+@media (max-width:700px){.etapa,.grade{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header><h1>Curadoria da associação</h1>
+    <p class="muted">Tudo que o atendimento diz passa por aqui: processos lidos dos seus POPs, documentos enviados pelos associados e soluções do catálogo. Protótipo do Hackathon Connect 7.0 (desafio FACESP), com dados fictícios.</p></header>
+  <section id="login">
+    <label for="token">Chave de acesso da curadoria</label>
+    <input id="token" type="password" autocomplete="off">
+    <p><button id="entrar" type="button" class="pri">Entrar</button> <span id="msg" class="muted"></span></p>
+  </section>
+  <div id="app" hidden class="lista">
+    <nav>
+      <button data-aba="trilhas" aria-pressed="true">Processos (POP)</button>
+      <button data-aba="documentos" aria-pressed="false">Documentos em análise</button>
+      <button data-aba="solucoes" aria-pressed="false">Soluções</button>
+    </nav>
+    <div id="aba-trilhas" class="lista">
+      <section>
+        <h2>Incluir procedimento</h2>
+        <p class="muted">Suba um POP, instrução de trabalho ou manual (PDF, Word ou texto). O sistema propõe o processo em etapas, mostra o trecho do documento que justifica cada uma e pergunta o que o documento não diz. Nada entra no atendimento antes da sua aprovação.</p>
+        <div class="linha"><input id="pop" type="file" accept=".pdf,.docx,.txt,.md" style="max-width:420px"><button id="propor" class="pri" type="button">Ler e propor processo</button><span id="msg-pop" class="muted"></span></div>
+      </section>
+      <div id="trilhas" class="lista"></div>
+    </div>
+    <div id="aba-documentos" class="lista" hidden></div>
+    <div id="aba-solucoes" class="lista" hidden>
+      <section>
+        <h2>Incluir solução no catálogo</h2>
+        <form id="form-sol" class="grade"></form>
+      </section>
+      <div id="propostas" class="lista"></div>
+    </div>
+  </div>
+</div>
+<script src="/curadoria.js"></script>
+</body>
+</html>
