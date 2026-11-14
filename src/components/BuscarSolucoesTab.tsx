@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react'
-import { ALL_CATEGORIES, MOCK_SUPPLIERS, Category } from '@/data/mockData'
+import { ALL_CATEGORIES } from '@/data/mockData'
 import { Supplier } from '@/types/ponte'
 import { SupplierCard } from './SupplierCard'
 import { Button } from '@/components/ui/button'
@@ -25,7 +25,7 @@ import { usePonte } from '@/context/PonteContext'
 import { toast } from '@/hooks/use-toast'
 
 export function BuscarSolucoesTab() {
-  const { addDemand, setActiveTab } = usePonte()
+  const { addDemand, setActiveTab, suppliers } = usePonte()
 
   // Filter States
   const [selectedCategory, setSelectedCategory] = useState<string>('todas')
@@ -37,42 +37,44 @@ export function BuscarSolucoesTab() {
   const [targetSupplier, setTargetSupplier] = useState<Supplier | null>(null)
   const [proposalNotes, setProposalNotes] = useState<string>('')
 
-  // Unique cities from mock suppliers
+  // Unique cities from shared supplier state
   const availableCities = useMemo(() => {
     const set = new Set<string>()
-    MOCK_SUPPLIERS.forEach((s) => set.add(s.city))
+    suppliers.forEach((s) => set.add(s.city))
     return Array.from(set).sort()
-  }, [])
+  }, [suppliers])
 
   // Combined AND Filtering
   const filteredSuppliers = useMemo(() => {
-    return MOCK_SUPPLIERS.filter((s) => {
-      // Category filter
-      if (selectedCategory !== 'todas' && s.category !== selectedCategory) {
-        return false
-      }
-
-      // Region/City filter
-      if (selectedRegion !== 'todas' && s.city !== selectedRegion) {
-        return false
-      }
-
-      // Minimum rating filter
-      if (minRating !== 'todas') {
-        const threshold = parseFloat(minRating.replace(',', '.'))
-        if (s.rating < threshold) {
+    return suppliers
+      .filter((s) => {
+        // Category filter
+        if (selectedCategory !== 'todas' && s.category !== selectedCategory) {
           return false
         }
-      }
 
-      // Only verified checkbox
-      if (onlyVerified && !s.verified) {
-        return false
-      }
+        // Region/City filter
+        if (selectedRegion !== 'todas' && s.city !== selectedRegion) {
+          return false
+        }
 
-      return true
-    }).sort((a, b) => b.rating - a.rating)
-  }, [selectedCategory, selectedRegion, minRating, onlyVerified])
+        // Minimum rating filter
+        if (minRating !== 'todas') {
+          const threshold = parseFloat(minRating.replace(',', '.'))
+          if (s.rating < threshold) {
+            return false
+          }
+        }
+
+        // Only verified checkbox
+        if (onlyVerified && !s.verified) {
+          return false
+        }
+
+        return true
+      })
+      .sort((a, b) => b.rating - a.rating)
+  }, [suppliers, selectedCategory, selectedRegion, minRating, onlyVerified])
 
   const handleResetFilters = () => {
     setSelectedCategory('todas')

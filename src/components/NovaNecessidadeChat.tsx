@@ -15,7 +15,6 @@ import {
   CATEGORY_QUESTIONS,
   classifyTextToCategory,
   Category,
-  MOCK_SUPPLIERS,
   buildMatchReason,
 } from '@/data/mockData'
 import { FichaNecessidadeCard } from './FichaNecessidadeCard'
@@ -58,6 +57,7 @@ export function NovaNecessidadeChat() {
     resetChat,
     addDemand,
     setActiveTab,
+    suppliers,
   } = usePonte()
 
   const [inputVal, setInputVal] = useState('')
@@ -336,9 +336,9 @@ export function NovaNecessidadeChat() {
 
   // Compatible suppliers sorted by rating descending
   const compatibleSuppliers = currentFicha
-    ? MOCK_SUPPLIERS.filter((s) => s.category === currentFicha.category).sort(
-        (a, b) => b.rating - a.rating,
-      )
+    ? suppliers
+        .filter((s) => s.category === currentFicha.category)
+        .sort((a, b) => b.rating - a.rating)
     : []
 
   // Handlers for result actions

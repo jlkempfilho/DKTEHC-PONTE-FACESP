@@ -1,8 +1,10 @@
+import { useState } from 'react'
 import { usePonte } from '@/context/PonteContext'
-import { ALL_STATUSES, DemandStatus } from '@/types/ponte'
+import { ALL_STATUSES, Demand, DemandStatus } from '@/types/ponte'
 import { DemandStatusBadge } from './DemandStatusBadge'
 import { FichaNecessidadeCard } from './FichaNecessidadeCard'
 import { Button } from '@/components/ui/button'
+import { Textarea } from '@/components/ui/textarea'
 import {
   Select,
   SelectContent,
@@ -10,10 +12,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { PlusCircle, Calendar, Send, Sparkles } from 'lucide-react'
+import {
+  PlusCircle,
+  Calendar,
+  Send,
+  Sparkles,
+  MessageCircleQuestion,
+  HelpCircle,
+} from 'lucide-react'
 
 export function MinhasDemandasTab() {
-  const { demands, updateDemandStatus, setActiveTab } = usePonte()
+  const { demands, updateDemandStatus, updateDemand, setActiveTab } = usePonte()
+
+  // Demandas do empresário logado (as demandas-semente pertencem a outras empresas)
+  const myDemands = demands.filter((d) => !d.ownerCompany)
 
   return (
     <div className="space-y-6">
@@ -38,7 +50,7 @@ export function MinhasDemandasTab() {
       </div>
 
       {/* Demands List or Empty State */}
-      {demands.length === 0 ? (
+      {myDemands.length === 0 ? (
         <div className="bg-white rounded-2xl border border-ponte-border p-8 sm:p-14 text-center shadow-xs animate-bubble-in">
           <div className="w-16 h-16 rounded-2xl bg-amber-50 text-ponte-orange flex items-center justify-center mx-auto mb-4 border border-amber-200">
             <Sparkles className="w-8 h-8" />
@@ -62,7 +74,7 @@ export function MinhasDemandasTab() {
         </div>
       ) : (
         <div className="space-y-6">
-          {demands.map((demand) => (
+          {myDemands.map((demand) => (
             <div
               key={demand.id}
               className="bg-white rounded-2xl border border-ponte-border p-5 sm:p-6 shadow-xs animate-bubble-in flex flex-col gap-5"
@@ -122,9 +134,82 @@ export function MinhasDemandasTab() {
               <div className="bg-slate-50/50 rounded-xl p-1 border border-slate-200/60">
                 <FichaNecessidadeCard ficha={demand.ficha} showHeader={false} />
               </div>
+
+              <ClarificationBox
+                demand={demand}
+                onRespond={(answer) => {
+                  updateDemand(demand.id, {
+                    clarificationAnswer: answer,
+                    status: 'Em curadoria',
+                  })
+                }}
+              />
             </div>
           ))}
         </div>
+      )}
+    </div>
+  )
+}
+
+interface ClarificationBoxProps {
+  demand: Demand
+  onRespond: (answer: string) => void
+}
+
+function ClarificationBox({ demand, onRespond }: ClarificationBoxProps) {
+  const [answer, setAnswer] = useState('')
+  const [answered, setAnswered] = useState(false)
+
+  if (demand.status !== 'Aguardando esclarecimento' || !demand.clarificationQuestion) {
+    return null
+  }
+
+  const handleSubmit = () => {
+    const trimmed = answer.trim()
+    if (!trimmed) return
+    onRespond(trimmed)
+    setAnswered(true)
+  }
+
+  return (
+    <div className="rounded-xl border border-orange-200 bg-orange-50/60 p-4 space-y-3 animate-bubble-in">
+      <div className="flex items-start gap-2.5">
+        <div className="w-8 h-8 rounded-full bg-orange-100 text-[#C2541B] flex items-center justify-center flex-shrink-0 border border-orange-200">
+          <MessageCircleQuestion className="w-4 h-4" />
+        </div>
+        <div className="min-w-0">
+          <p className="text-sm font-semibold text-ponte-text">
+            A associação pediu um esclarecimento:
+          </p>
+          <p className="text-sm text-ponte-text-muted italic mt-0.5 leading-relaxed">
+            &ldquo;{demand.clarificationQuestion}&rdquo;
+          </p>
+        </div>
+      </div>
+
+      {!answered ? (
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-start gap-2 sm:pl-[42px]">
+          <Textarea
+            value={answer}
+            onChange={(e) => setAnswer(e.target.value)}
+            placeholder="Escreva aqui a sua resposta para a associação..."
+            className="text-sm min-h-[60px] bg-white border-ponte-border resize-none flex-1"
+          />
+          <Button
+            onClick={handleSubmit}
+            disabled={!answer.trim()}
+            className="bg-ponte-blue hover:bg-ponte-blue-hover text-white rounded-full px-5 py-2 text-xs font-semibold gap-2 shadow-xs self-start h-9"
+          >
+            <Send className="w-3.5 h-3.5" />
+            Responder
+          </Button>
+        </div>
+      ) : (
+        <p className="text-xs font-medium text-[#2E7D4F] flex items-center gap-1.5 sm:pl-[42px]">
+          <HelpCircle className="w-3.5 h-3.5" />
+          Resposta enviada para a associação.
+        </p>
       )}
     </div>
   )

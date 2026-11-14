@@ -1,7 +1,71 @@
-import { Category, Supplier, ALL_CATEGORIES } from '@/types/ponte'
+import { Category, Supplier, ALL_CATEGORIES, Demand, FichaNecessidade } from '@/types/ponte'
 
 export { ALL_CATEGORIES }
 export type { Category }
+
+const SEED_FICHAS: Record<string, FichaNecessidade> = {
+  'seed-1': {
+    category: 'Cobrança e inadimplência',
+    originalText:
+      'As vendas a prazo estão crescendo, mas perco o controle de quem já deveria ter pagado e acabo cobrando com atraso ou esquecendo clientes.',
+    city: 'Mogi Guaçu',
+    answers: [
+      {
+        question: 'Onde está o maior problema?',
+        answer: 'Controle de quem está atrasado',
+      },
+      {
+        question: 'Como você cobra seus clientes hoje?',
+        answer: 'Mensagens manuais no WhatsApp',
+      },
+    ],
+    investment: 'R$ 200 a R$ 1.000 por mês',
+    acceptsPilot: true,
+  },
+  'seed-2': {
+    category: 'Site ou loja virtual',
+    originalText:
+      'Meu ateliê funciona só pelo Instagram e perco pedidos de fora da cidade. Quero uma página simples onde o cliente veja o catálogo e faça o pedido sozinho.',
+    city: 'Mogi Guaçu',
+    answers: [
+      {
+        question: 'O que o site precisa fazer?',
+        answer: 'Divulgar serviços e receber contatos',
+      },
+      {
+        question: 'Qual é a urgência para colocar no ar?',
+        answer: 'Dentro de 1 a 2 meses',
+      },
+    ],
+    investment: 'Projeto fechado até R$ 5 mil',
+    acceptsPilot: false,
+  },
+}
+
+export const SEED_DEMANDS: Demand[] = [
+  {
+    id: 'seed-demand-1',
+    title: 'Cobrança e inadimplência — Mogi Guaçu',
+    category: 'Cobrança e inadimplência',
+    city: 'Mogi Guaçu',
+    status: 'Em curadoria',
+    createdAt: '01/06/2025',
+    ficha: SEED_FICHAS['seed-1'],
+    ownerCompany: 'Padaria Pão da Serra',
+    reach: 'local',
+  },
+  {
+    id: 'seed-demand-2',
+    title: 'Site ou loja virtual — Mogi Guaçu',
+    category: 'Site ou loja virtual',
+    city: 'Mogi Guaçu',
+    status: 'Em curadoria',
+    createdAt: '03/06/2025',
+    ficha: SEED_FICHAS['seed-2'],
+    ownerCompany: 'Ateliê Bordados da Lu',
+    reach: 'local',
+  },
+]
 
 export const MOCK_SUPPLIERS: Supplier[] = [
   {

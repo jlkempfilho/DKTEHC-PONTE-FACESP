@@ -68,6 +68,8 @@ export interface FichaNecessidade {
   acceptsPilot: boolean
 }
 
+export type DemandReach = 'local' | 'regional' | 'estadual'
+
 export interface Demand {
   id: string
   title: string
@@ -77,6 +79,14 @@ export interface Demand {
   createdAt: string
   ficha: FichaNecessidade
   requestedSupplierName?: string
+  // Empresa dona da demanda (preenchida nas demandas-semente de outras empresas)
+  ownerCompany?: string
+  // Alcance da divulgação definido pela curadoria da associação
+  reach?: DemandReach
+  // Pergunta de esclarecimento pedida pela associação
+  clarificationQuestion?: string
+  // Resposta dada pelo empresário ao esclarecimento
+  clarificationAnswer?: string
 }
 
 export type UserRole = 'Empresário' | 'Fornecedor' | 'Associação' | 'FACESP'

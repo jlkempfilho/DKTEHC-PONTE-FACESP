@@ -8,6 +8,10 @@ import { Sparkles, FolderKanban, Search } from 'lucide-react'
 export default function Index() {
   const { activeTab, setActiveTab, demands } = usePonte()
 
+  // "Minhas demandas" conta apenas as demandas da própria empresa
+  // (as demandas-semente pertencem a outras empresas e não aparecem aqui)
+  const myDemandsCount = demands.filter((d) => !d.ownerCompany).length
+
   const tabs: {
     id: ActiveTab
     label: string
@@ -23,7 +27,7 @@ export default function Index() {
       id: 'minhas-demandas',
       label: 'Minhas demandas',
       icon: FolderKanban,
-      badge: demands.length > 0 ? demands.length : undefined,
+      badge: myDemandsCount > 0 ? myDemandsCount : undefined,
     },
     {
       id: 'buscar-solucoes',

@@ -4,10 +4,12 @@ import {
   Category,
   Demand,
   DemandStatus,
+  DemandReach,
   FichaNecessidade,
   Supplier,
   UserRole,
 } from '@/types/ponte'
+import { MOCK_SUPPLIERS, SEED_DEMANDS } from '@/data/mockData'
 
 export interface ChatMessage {
   id: string
@@ -26,8 +28,9 @@ interface PonteContextType {
   activeTab: ActiveTab
   setActiveTab: (tab: ActiveTab) => void
 
-  // Demands
+  // Shared state (all roles read the same in-memory store)
   demands: Demand[]
+  suppliers: Supplier[]
   addDemand: (params: {
     category: Category
     city: string
@@ -36,6 +39,8 @@ interface PonteContextType {
     requestedSupplierName?: string
   }) => Demand
   updateDemandStatus: (demandId: string, newStatus: DemandStatus) => void
+  updateDemand: (demandId: string, changes: Partial<Demand>) => void
+  verifySupplier: (supplierId: string, city: string) => void
 
   // Chat state (preserved across role/tab switching)
   chatMessages: ChatMessage[]
@@ -77,7 +82,9 @@ const INITIAL_MESSAGE: ChatMessage = {
 export function PonteProvider({ children }: { children: ReactNode }) {
   const [activeRole, setActiveRole] = useState<UserRole>('Empresário')
   const [activeTab, setActiveTab] = useState<ActiveTab>('nova-necessidade')
-  const [demands, setDemands] = useState<Demand[]>([])
+  // ONE shared in-memory store visible to all roles (no backend, no login)
+  const [demands, setDemands] = useState<Demand[]>(SEED_DEMANDS)
+  const [suppliers, setSuppliers] = useState<Supplier[]>(MOCK_SUPPLIERS)
 
   // Chat conversation state
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([INITIAL_MESSAGE])
@@ -140,6 +147,7 @@ export function PonteProvider({ children }: { children: ReactNode }) {
       }),
       ficha,
       requestedSupplierName,
+      reach: 'local',
     }
 
     setDemands((prev) => [newDemand, ...prev])
@@ -150,6 +158,16 @@ export function PonteProvider({ children }: { children: ReactNode }) {
     setDemands((prev) => prev.map((d) => (d.id === demandId ? { ...d, status: newStatus } : d)))
   }
 
+  const updateDemand = (demandId: string, changes: Partial<Demand>) => {
+    setDemands((prev) => prev.map((d) => (d.id === demandId ? { ...d, ...changes } : d)))
+  }
+
+  const verifySupplier = (supplierId: string, city: string) => {
+    setSuppliers((prev) =>
+      prev.map((s) => (s.id === supplierId ? { ...s, verified: true, verifiedByCity: city } : s)),
+    )
+  }
+
   return (
     <PonteContext.Provider
       value={{
@@ -158,8 +176,11 @@ export function PonteProvider({ children }: { children: ReactNode }) {
         activeTab,
         setActiveTab,
         demands,
+        suppliers,
         addDemand,
         updateDemandStatus,
+        updateDemand,
+        verifySupplier,
         chatMessages,
         setChatMessages,
         chatStep,
