@@ -3,6 +3,18 @@ import { Category, Supplier, ALL_CATEGORIES, Demand, FichaNecessidade } from '@/
 export { ALL_CATEGORIES }
 export type { Category }
 
+// Região (regional FACESP) de cada cidade usada nas demandas do protótipo.
+export const DEMAND_REGION_BY_CITY: Record<string, string> = {
+  'Mogi Guaçu': 'Baixa Mogiana',
+  Campinas: 'Campinas',
+  'São José do Rio Preto': 'São José do Rio Preto',
+  'Presidente Prudente': 'Presidente Prudente',
+  Sorocaba: 'Sorocaba',
+  Bauru: 'Bauru',
+  'Ribeirão Preto': 'Ribeirão Preto',
+  Santos: 'Baixada Santista',
+}
+
 const SEED_FICHAS: Record<string, FichaNecessidade> = {
   'seed-1': {
     category: 'Cobrança e inadimplência',
@@ -40,6 +52,96 @@ const SEED_FICHAS: Record<string, FichaNecessidade> = {
     investment: 'Projeto fechado até R$ 5 mil',
     acceptsPilot: false,
   },
+  'seed-3': {
+    category: 'Atendimento e WhatsApp',
+    originalText:
+      'Dois atendentes dividem o WhatsApp da loja e muitos pedidos ficam sem resposta na hora do almoço.',
+    city: 'Campinas',
+    answers: [
+      {
+        question: 'O que você quer automatizar?',
+        answer: 'Respostas rápidas no WhatsApp',
+      },
+      {
+        question: 'Quantas pessoas respondem aos clientes hoje?',
+        answer: 'De 2 a 4 atendentes',
+      },
+    ],
+    investment: 'R$ 200 a R$ 1.000 por mês',
+    acceptsPilot: true,
+  },
+  'seed-4': {
+    category: 'Estoque e compras',
+    originalText:
+      'Trabalho com perecíveis e ainda anoto validade em caderno. Já perdi mercadoria por esquecimento.',
+    city: 'Presidente Prudente',
+    answers: [
+      {
+        question: 'Qual é o maior desafio no seu estoque?',
+        answer: 'Controle de validade e perdas',
+      },
+      {
+        question: 'Como você controla as mercadorias atualmente?',
+        answer: 'Caderno ou de cabeça',
+      },
+    ],
+    investment: 'Até R$ 200 por mês',
+    acceptsPilot: true,
+  },
+  'seed-5': {
+    category: 'Marketing e vendas',
+    originalText:
+      'Meu salão depende de indicação. Quero anúncios que atraiam clientes novas do bairro sem depender de sorte.',
+    city: 'Santos',
+    answers: [
+      {
+        question: 'Qual é o seu principal objetivo com marketing?',
+        answer: 'Atrair clientes novos da minha cidade',
+      },
+      {
+        question: 'Você já investiu em anúncios na internet?',
+        answer: 'Nunca anunciei',
+      },
+    ],
+    investment: 'R$ 200 a R$ 1.000 por mês',
+    acceptsPilot: false,
+  },
+  'seed-6': {
+    category: 'Financeiro e recebimentos',
+    originalText:
+      'Vendo em três maquininhas diferentes e nunca sei quanto sobrou de verdade no fim do mês.',
+    city: 'Ribeirão Preto',
+    answers: [
+      {
+        question: 'Qual é a sua principal dor financeira?',
+        answer: 'Conciliação de taxas de cartão e maquininha',
+      },
+      {
+        question: 'Qual é a média de vendas por dia?',
+        answer: 'Até 50 vendas/dia',
+      },
+    ],
+    investment: 'R$ 200 a R$ 1.000 por mês',
+    acceptsPilot: true,
+  },
+  'seed-7': {
+    category: 'Gestão e equipe',
+    originalText:
+      'Com 12 funcionários, monto escala de folgas no papel e sempre tem gente faltando no mesmo dia.',
+    city: 'Sorocaba',
+    answers: [
+      {
+        question: 'Qual processo toma mais o seu tempo?',
+        answer: 'Escalas de trabalho e folgas da equipe',
+      },
+      {
+        question: 'Quantos colaboradores atuam na sua empresa?',
+        answer: 'De 6 a 15 colaboradores',
+      },
+    ],
+    investment: 'Projeto fechado até R$ 5 mil',
+    acceptsPilot: false,
+  },
 }
 
 export const SEED_DEMANDS: Demand[] = [
@@ -66,6 +168,99 @@ export const SEED_DEMANDS: Demand[] = [
     ownerCompany: 'Ateliê Bordados da Lu',
     reach: 'local',
     proposals: [],
+  },
+  {
+    id: 'seed-demand-3',
+    title: 'Atendimento e WhatsApp — Campinas',
+    category: 'Atendimento e WhatsApp',
+    city: 'Campinas',
+    status: 'Aberta a propostas',
+    createdAt: '10/06/2025',
+    ficha: SEED_FICHAS['seed-3'],
+    ownerCompany: 'Distribuidora Bela Vista',
+    reach: 'estadual',
+    proposals: [],
+  },
+  {
+    id: 'seed-demand-4',
+    title: 'Estoque e compras — Presidente Prudente',
+    category: 'Estoque e compras',
+    city: 'Presidente Prudente',
+    status: 'Aberta a propostas',
+    createdAt: '11/06/2025',
+    ficha: SEED_FICHAS['seed-4'],
+    ownerCompany: 'Mercearia Bom Preço',
+    reach: 'regional',
+    proposals: [],
+  },
+  {
+    id: 'seed-demand-5',
+    title: 'Marketing e vendas — Santos',
+    category: 'Marketing e vendas',
+    city: 'Santos',
+    status: 'Aberta a propostas',
+    createdAt: '12/06/2025',
+    ficha: SEED_FICHAS['seed-5'],
+    ownerCompany: 'Salão Beleza & Cia',
+    reach: 'estadual',
+    proposals: [],
+  },
+  {
+    id: 'seed-demand-6',
+    title: 'Financeiro e recebimentos — Ribeirão Preto',
+    category: 'Financeiro e recebimentos',
+    city: 'Ribeirão Preto',
+    status: 'Em andamento',
+    createdAt: '13/06/2025',
+    ficha: SEED_FICHAS['seed-6'],
+    ownerCompany: 'Mercadinho Fruta Fresca',
+    reach: 'regional',
+    proposals: [
+      {
+        id: 'seed-proposal-1',
+        demandId: 'seed-demand-6',
+        supplierId: 'caixaforte-sistemas',
+        type: 'Projeto-piloto',
+        value: 'R$ 1.500 pelo piloto de 30 dias',
+        deadline: '30 dias após aceite',
+        message:
+          'Implantamos a conciliação das três maquininhas com relatório diário simples, sem trocar de sistema.',
+        pilotSuccessCriteria:
+          '100% das vendas de cartão conciliadas no relatório diário por 2 semanas seguidas.',
+        createdAt: '14/06/2025',
+      },
+    ],
+    acceptedProposalId: 'seed-proposal-1',
+  },
+  {
+    id: 'seed-demand-7',
+    title: 'Gestão e equipe — Sorocaba',
+    category: 'Gestão e equipe',
+    city: 'Sorocaba',
+    status: 'Concluída',
+    createdAt: '05/06/2025',
+    ficha: SEED_FICHAS['seed-7'],
+    ownerCompany: 'Farmácia Vida Saúde',
+    reach: 'estadual',
+    proposals: [
+      {
+        id: 'seed-proposal-2',
+        demandId: 'seed-demand-7',
+        supplierId: 'time-e-tarefa',
+        type: 'Orçamento',
+        value: 'R$ 180 por mês',
+        deadline: 'Implantação em 15 dias',
+        message:
+          'Configuramos as escalas de folga com aviso automático de conflito para a equipe da loja.',
+        createdAt: '06/06/2025',
+      },
+    ],
+    acceptedProposalId: 'seed-proposal-2',
+    review: {
+      stars: 5,
+      comment: 'Em duas semanas as escalas pararam de gerar reunião e reclamação. Recomendo.',
+      supplierId: 'time-e-tarefa',
+    },
   },
 ]
 

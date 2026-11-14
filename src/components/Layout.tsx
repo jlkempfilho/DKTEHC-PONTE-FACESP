@@ -3,6 +3,7 @@ import { usePonte } from '@/context/PonteContext'
 import { ProfileCard } from './ProfileCard'
 import { AssociacaoArea } from './AssociacaoArea'
 import { FornecedorArea } from './FornecedorArea'
+import { FacespArea } from './FacespArea'
 import { UnderConstruction } from './UnderConstruction'
 import { TopBar } from './TopBar'
 
@@ -17,6 +18,8 @@ export default function Layout() {
           <AssociacaoArea />
         ) : activeRole === 'Fornecedor' ? (
           <FornecedorArea />
+        ) : activeRole === 'FACESP' ? (
+          <FacespArea />
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-8 items-start">
             {/* Left column: profile card for Empresário, "Em construção" for other roles */}
