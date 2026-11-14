@@ -9,12 +9,18 @@ import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { Badge } from '@/components/ui/badge'
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
+import {
   Landmark,
   Building2,
   Inbox,
   Globe2,
   MapPin,
-  CheckCircle2,
   ShieldCheck,
   Clock,
   Wrench,
@@ -22,8 +28,18 @@ import {
 
 type AssocTab = 'curadoria' | 'fornecedores' | 'servicos'
 
+const ASSOC_CIDADES = ['Mogi Guaçu', 'Mogi Mirim', 'Campinas'] as const
+type AssocCidade = (typeof ASSOC_CIDADES)[number]
+
+const SUBTITULO_POR_CIDADE: Record<AssocCidade, string> = {
+  'Mogi Guaçu': 'Curadoria local · Baixa Mogiana',
+  'Mogi Mirim': 'Curadoria local · Baixa Mogiana',
+  Campinas: 'Curadoria local · Campinas',
+}
+
 export function AssociacaoArea() {
   const [assocTab, setAssocTab] = useState<AssocTab>('curadoria')
+  const [cidadeSimulada, setCidadeSimulada] = useState<AssocCidade>('Mogi Guaçu')
 
   const tabs: { id: AssocTab; label: string; icon: React.ComponentType<{ className?: string }> }[] =
     [
@@ -49,21 +65,47 @@ export function AssociacaoArea() {
               </div>
               <h2
                 className="font-heading font-bold text-base text-ponte-text truncate"
-                title="Associação Comercial de Mogi Guaçu"
+                title={`Associação Comercial de ${cidadeSimulada}`}
               >
-                Associação Comercial de Mogi Guaçu
+                Associação Comercial de {cidadeSimulada}
               </h2>
               <p className="text-xs text-ponte-text-muted mt-0.5">
-                Curadoria local · Baixa Mogiana
+                {SUBTITULO_POR_CIDADE[cidadeSimulada]}
               </p>
             </div>
           </div>
 
-          <div className="mt-4 p-3 bg-amber-50/70 border border-amber-200/60 rounded-xl">
-            <p className="text-[11px] text-amber-900 leading-relaxed">
-              <span className="font-semibold">Rede Conectada:</span> FACESP e associações comerciais
-              da Baixa Mogiana.
-            </p>
+          <div className="mt-4 space-y-3">
+            <div>
+              <label className="text-[11px] font-semibold text-ponte-text-muted uppercase tracking-wide block mb-1.5">
+                Simulando a associação
+              </label>
+              <Select
+                value={cidadeSimulada}
+                onValueChange={(val) => setCidadeSimulada(val as AssocCidade)}
+              >
+                <SelectTrigger className="w-full text-xs font-semibold bg-slate-50 border-ponte-border h-9">
+                  <SelectValue placeholder="Selecione a cidade" />
+                </SelectTrigger>
+                <SelectContent className="bg-white">
+                  {ASSOC_CIDADES.map((cidade) => (
+                    <SelectItem key={cidade} value={cidade} className="text-xs">
+                      {cidade}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <p className="text-[11px] text-ponte-text-muted mt-2 leading-relaxed">
+                Cada associação vê só as demandas e os fornecedores da sua cidade.
+              </p>
+            </div>
+
+            <div className="p-3 bg-amber-50/70 border border-amber-200/60 rounded-xl">
+              <p className="text-[11px] text-amber-900 leading-relaxed">
+                <span className="font-semibold">Rede Conectada:</span> FACESP e associações
+                comerciais da Baixa Mogiana.
+              </p>
+            </div>
           </div>
         </div>
 
@@ -114,25 +156,23 @@ export function AssociacaoArea() {
         </div>
 
         {assocTab === 'curadoria' ? (
-          <CuradoriaTab />
+          <CuradoriaTab cidade={cidadeSimulada} />
         ) : assocTab === 'fornecedores' ? (
-          <FornecedoresCidadeTab />
+          <FornecedoresCidadeTab cidade={cidadeSimulada} />
         ) : (
-          <NossosServicosTab />
+          <NossosServicosTab cidade={cidadeSimulada} />
         )}
       </div>
     </div>
   )
 }
 
-function CuradoriaTab() {
+function CuradoriaTab({ cidade }: { cidade: string }) {
   const { demands, updateDemand } = usePonte()
   const [clarificationDrafts, setClarificationDrafts] = useState<Record<string, string>>({})
 
-  // Only demands from the association's city awaiting curation
-  const curadoriaDemands = demands.filter(
-    (d) => d.city === 'Mogi Guaçu' && d.status === 'Em curadoria',
-  )
+  // Only demands from the simulated city awaiting curation
+  const curadoriaDemands = demands.filter((d) => d.city === cidade && d.status === 'Em curadoria')
 
   const liberar = (demand: Demand, reach: DemandReach) => {
     updateDemand(demand.id, { status: 'Aberta a propostas', reach })
@@ -282,8 +322,8 @@ function CuradoriaTab() {
   )
 }
 
-function NossosServicosTab() {
-  const servicosMogiGuacu = SERVICOS_DAS_ASSOCIACOES.filter((s) => s.cidade === 'Mogi Guaçu')
+function NossosServicosTab({ cidade }: { cidade: string }) {
+  const servicosDaCidade = SERVICOS_DAS_ASSOCIACOES.filter((s) => s.cidade === cidade)
 
   return (
     <div className="space-y-4">
@@ -297,18 +337,18 @@ function NossosServicosTab() {
         </p>
       </div>
 
-      {servicosMogiGuacu.length === 0 ? (
+      {servicosDaCidade.length === 0 ? (
         <div className="bg-white rounded-2xl border border-ponte-border p-12 text-center shadow-xs">
           <div className="w-12 h-12 rounded-2xl bg-slate-100 text-slate-400 flex items-center justify-center mx-auto mb-3">
             <Wrench className="w-6 h-6" />
           </div>
           <h3 className="font-heading font-bold text-base text-ponte-text mb-1">
-            Nenhum serviço identificado ainda.
+            Nenhum serviço lido no site desta associação. A equipe pode cadastrar os serviços aqui.
           </h3>
         </div>
       ) : (
         <div className="space-y-4">
-          {servicosMogiGuacu.map((servico) => (
+          {servicosDaCidade.map((servico) => (
             <div
               key={servico.linkOrigem}
               className="bg-white rounded-2xl border border-ponte-border shadow-xs p-5 sm:p-6"
@@ -330,10 +370,10 @@ function NossosServicosTab() {
   )
 }
 
-function FornecedoresCidadeTab() {
+function FornecedoresCidadeTab({ cidade }: { cidade: string }) {
   const { suppliers, verifySupplier } = usePonte()
 
-  const cidadeSuppliers = suppliers.filter((s) => s.city === 'Mogi Guaçu')
+  const cidadeSuppliers = suppliers.filter((s) => s.city === cidade)
 
   return (
     <div className="space-y-4">
@@ -342,7 +382,7 @@ function FornecedoresCidadeTab() {
           Fornecedores da cidade
         </h2>
         <p className="text-xs sm:text-sm text-ponte-text-muted mt-0.5">
-          Empresas da rede com sede em Mogi Guaçu e o selo concedido pela associação local
+          Empresas da rede com sede em {cidade} e o selo concedido pela associação local
         </p>
       </div>
 
@@ -352,7 +392,7 @@ function FornecedoresCidadeTab() {
             <Building2 className="w-6 h-6" />
           </div>
           <h3 className="font-heading font-bold text-base text-ponte-text mb-1">
-            Nenhum fornecedor cadastrado em Mogi Guaçu ainda.
+            Nenhum fornecedor cadastrado nesta cidade.
           </h3>
         </div>
       ) : (
@@ -381,7 +421,7 @@ function FornecedoresCidadeTab() {
                       </div>
                     </div>
                     <Button
-                      onClick={() => verifySupplier(supplier.id, 'Mogi Guaçu')}
+                      onClick={() => verifySupplier(supplier.id, cidade)}
                       className="bg-ponte-orange hover:bg-ponte-orange-hover text-white rounded-full px-5 py-2 text-xs font-semibold gap-2 shadow-xs"
                     >
                       <ShieldCheck className="w-4 h-4" />

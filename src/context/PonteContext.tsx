@@ -21,7 +21,7 @@ export interface ChatMessage {
   id: string
   sender: 'assistant' | 'user'
   text: string
-  customContent?: 'category-confirmation' | 'question-chips' | 'city-input'
+  customContent?: 'category-confirmation' | 'question-chips' | 'city-input' | 'opening-chips'
   timestamp: number
 }
 
@@ -126,7 +126,8 @@ export function PonteProvider({ children }: { children: ReactNode }) {
       {
         id: `msg-init-${Date.now()}`,
         sender: 'assistant',
-        text: 'Olá! Escreva com as suas palavras qual problema quer resolver.',
+        text: 'Olá! Selecione uma opção ou escreva com as suas palavras a sua dúvida ou necessidade.',
+        customContent: 'opening-chips',
         timestamp: Date.now(),
       },
     ])

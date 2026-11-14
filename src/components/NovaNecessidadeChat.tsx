@@ -34,6 +34,19 @@ const INVESTMENT_OPTIONS = [
 
 const PILOT_OPTIONS = ['Sim', 'Não']
 
+// Chips de abertura: cada um leva direto a uma categoria, sem confirmação.
+const OPENING_CHIPS: { label: string; category: Category }[] = [
+  { label: 'Cobrar clientes que pagam depois', category: 'Cobrança e inadimplência' },
+  { label: 'Vender pela internet ou ter um site', category: 'Site ou loja virtual' },
+  { label: 'Organizar o atendimento no WhatsApp', category: 'Atendimento e WhatsApp' },
+  { label: 'Controlar estoque e compras', category: 'Estoque e compras' },
+  { label: 'Saber se estou tendo lucro', category: 'Financeiro e recebimentos' },
+  { label: 'Usar inteligência artificial', category: 'Inteligência artificial e dados' },
+  { label: 'Organizar a equipe e a rotina', category: 'Gestão e equipe' },
+  { label: 'Atrair e fidelizar clientes', category: 'Marketing e vendas' },
+  { label: 'É outra coisa', category: 'Solução sob medida' },
+]
+
 /** Renderiza **negrito** como <strong> de verdade; sem asteriscos na tela. */
 function renderBoldText(text: string) {
   const parts = text.split(/\*\*(.+?)\*\*/g)
@@ -134,6 +147,47 @@ export function NovaNecessidadeChat() {
         },
       ])
     }, 700)
+  }
+
+  // Chip de abertura: categoria definida diretamente, sem confirmação — vai
+  // direto para a primeira pergunta da categoria.
+  const handleOpeningChip = (chip: (typeof OPENING_CHIPS)[number]) => {
+    setFreeText(chip.label)
+    setDetectedCategory(chip.category)
+
+    setChatMessages((prev) => [
+      ...prev,
+      {
+        id: `user-chip-${Date.now()}`,
+        sender: 'user',
+        text: chip.label,
+        timestamp: Date.now(),
+      },
+    ])
+
+    setIsTyping(true)
+
+    const categoryQuestions = CATEGORY_QUESTIONS[chip.category] || []
+    const firstQ = categoryQuestions[0]
+
+    setTimeout(() => {
+      setIsTyping(false)
+      if (firstQ) {
+        setChatStep(2)
+        setChatMessages((prev) => [
+          ...prev,
+          {
+            id: `asst-q0-${Date.now()}`,
+            sender: 'assistant',
+            text: firstQ.question,
+            customContent: 'question-chips',
+            timestamp: Date.now(),
+          },
+        ])
+      } else {
+        askCommonCity()
+      }
+    }, 600)
   }
 
   // Step 1: User confirms/changes category
@@ -483,6 +537,24 @@ export function NovaNecessidadeChat() {
                 >
                   <p className="whitespace-pre-wrap">{renderBoldText(msg.text)}</p>
 
+                  {/* Interactive: Opening chips (somente no passo inicial) */}
+                  {msg.customContent === 'opening-chips' &&
+                    chatStep === 0 &&
+                    msg.id === chatMessages[0]?.id && (
+                      <div className="mt-3.5 flex flex-wrap gap-2">
+                        {OPENING_CHIPS.map((chip) => (
+                          <button
+                            key={chip.category}
+                            type="button"
+                            onClick={() => handleOpeningChip(chip)}
+                            className="px-3.5 py-1.5 rounded-full text-xs font-medium border border-ponte-border bg-slate-50 hover:bg-ponte-blue hover:text-white hover:border-ponte-blue transition-all active:scale-95 text-left"
+                          >
+                            {chip.label}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+
                   {/* Interactive: Category Confirmation Dropdown */}
                   {msg.customContent === 'category-confirmation' && chatStep === 1 && (
                     <div className="mt-4 pt-3 border-t border-ponte-border/80 flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
@@ -647,7 +719,7 @@ export function NovaNecessidadeChat() {
             <Input
               value={inputVal}
               onChange={(e) => setInputVal(e.target.value)}
-              placeholder="Ex: Preciso de um sistema para controlar estoques e validade dos produtos..."
+              placeholder="Ou escreva aqui a sua dúvida ou necessidade"
               className="bg-white border-ponte-border text-sm h-11 rounded-xl focus-visible:ring-ponte-blue"
               autoFocus
             />

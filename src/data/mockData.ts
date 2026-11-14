@@ -169,6 +169,42 @@ const SEED_FICHAS: Record<string, FichaNecessidade> = {
     investment: 'R$ 200 a R$ 1.000 por mês',
     acceptsPilot: true,
   },
+  'seed-8': {
+    category: 'Inteligência artificial e dados',
+    originalText:
+      'Anoto todas as vendas num caderninho e não sei quais produtos dão mais lucro. Queria enxergar isso no celular sem virar analista de dados.',
+    city: 'Mogi Mirim',
+    answers: [
+      {
+        question: 'O que você gostaria de enxergar no seu negócio?',
+        answer: 'Quais produtos dão mais lucro real',
+      },
+      {
+        question: 'Você já possui dados registrados de vendas?',
+        answer: 'Ainda tenho poucos registros',
+      },
+    ],
+    investment: 'Até R$ 200 por mês',
+    acceptsPilot: true,
+  },
+  'seed-9': {
+    category: 'Solução sob medida',
+    originalText:
+      'Nenhuma pronta: preciso integrar o sistema do balcão com a transportadora que usamos, hoje tudo é conferido na mão.',
+    city: 'Campinas',
+    answers: [
+      {
+        question: 'Qual tipo de sistema você precisa?',
+        answer: 'Integração entre sistemas que já uso',
+      },
+      {
+        question: 'Já existe alguma especificação pronta?',
+        answer: 'Tenho apenas a ideia e a necessidade',
+      },
+    ],
+    investment: 'Projeto fechado até R$ 5 mil',
+    acceptsPilot: false,
+  },
   'seed-7': {
     category: 'Gestão e equipe',
     originalText:
@@ -276,6 +312,30 @@ export const SEED_DEMANDS: Demand[] = [
       },
     ],
     acceptedProposalId: 'seed-proposal-1',
+  },
+  {
+    id: 'seed-demand-8',
+    title: 'Inteligência artificial e dados — Mogi Mirim',
+    category: 'Inteligência artificial e dados',
+    city: 'Mogi Mirim',
+    status: 'Em curadoria',
+    createdAt: '14/06/2025',
+    ficha: SEED_FICHAS['seed-8'],
+    ownerCompany: 'Adega Vinhos do Vale',
+    reach: 'local',
+    proposals: [],
+  },
+  {
+    id: 'seed-demand-9',
+    title: 'Solução sob medida — Campinas',
+    category: 'Solução sob medida',
+    city: 'Campinas',
+    status: 'Em curadoria',
+    createdAt: '15/06/2025',
+    ficha: SEED_FICHAS['seed-9'],
+    ownerCompany: 'Ótica Visão Clara',
+    reach: 'local',
+    proposals: [],
   },
   {
     id: 'seed-demand-7',
@@ -454,6 +514,38 @@ export const MOCK_SUPPLIERS: Supplier[] = [
     customerQuote: 'Construíram exatamente o que pedimos.',
     matchReasonTemplate:
       'Equipe local em Mogi Guaçu para desenvolvimento customizado e integrações específicas.',
+  },
+  {
+    id: 'mirim-web-studio',
+    name: 'Mirim Web Studio',
+    type: 'Agência',
+    city: 'Mogi Mirim',
+    verified: false,
+    verifiedByCity: '',
+    category: 'Site ou loja virtual',
+    description: 'Sites e lojas virtuais para o comércio da cidade, com atendimento presencial.',
+    priceRange: 'Projeto fechado de R$ 2 mil a R$ 6 mil',
+    rating: 4.5,
+    reviewsCount: 23,
+    customerQuote: 'Nosso site ficou pronto em três semanas, com suporte na hora.',
+    matchReasonTemplate:
+      'Agência local em Mogi Mirim especializada em páginas e lojas virtuais de pequenos negócios.',
+  },
+  {
+    id: 'campinas-conecta',
+    name: 'Campinas Conecta TI',
+    type: 'Software house',
+    city: 'Campinas',
+    verified: true,
+    verifiedByCity: 'Campinas',
+    category: 'Solução sob medida',
+    description: 'Integrações entre sistemas e automações de processos internos sob medida.',
+    priceRange: 'Projeto fechado de R$ 4 mil a R$ 10 mil',
+    rating: 4.6,
+    reviewsCount: 38,
+    customerQuote: 'Integraram o balcão com a logística em um mês.',
+    matchReasonTemplate:
+      'Software house em Campinas especializada em integração entre sistemas já existentes.',
   },
   {
     id: 'fluxocerto-solucoes',
